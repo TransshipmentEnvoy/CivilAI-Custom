@@ -1,8 +1,8 @@
 
 //>
-// ====================================================== 
+// ======================================================
 //                       SAVE/LOAD
-// ====================================================== 
+// ======================================================
 
 function CivilAI::Save() {
 local Save = {
@@ -50,7 +50,7 @@ Save.sRoadType = AIRoad.GetCurrentRoadType();
 AILog.Info("I've made a few notes...");
 
 return Save;
-}  
+}
 function CivilAI::Load(version, data) {
 
 if ("s0" in data) Dudtowns = ArrayToList(data.s0);
@@ -77,7 +77,7 @@ if ("sRoadType" in data) {AIRoad.SetCurrentRoadType(data.sRoadType);} else {Sele
 AILog.Info(fname + " " + lname + " here - I've found my notes.");
 
 IsLoaded = true;
-}  
+}
 
 /**
  * Converts an AIList to an array.
@@ -116,9 +116,9 @@ function CivilAI::ArrayToList(array)
 	return list;
 }
 
-// ====================================================== 
+// ======================================================
 //                     LOAD PARAMETERS
-// ====================================================== 
+// ======================================================
 
 function CivilAI::LoadParas() {
 NetworkRadius = AIController.GetSetting("NetworkRadius");
@@ -126,13 +126,13 @@ BrakeYear = 	AIController.GetSetting("BrakeYear");
 
 // the following were formerly parameters, but are now set values. Modify if you want to!
 
-MinPop =		1000 
-MaxBus = 		500  
-MaxCar = 		500  
-BuyCar = 	 	10 
-MinAirRange =	80 
-BuyPlane = 		1  
+MinPop =		1000
+MaxBus = 		2000
+MaxCar = 		500
+BuyCar = 	 	10
+MinAirRange =	240
+BuyPlane = 		1
 TrainRange = 	NetworkRadius / 2
-ShipRange = 	NetworkRadius 	
+ShipRange = 	NetworkRadius
 }
-  
+

@@ -146,7 +146,7 @@ local GoRoute = 1000000;
 local NodeRoute = 0;
 foreach (town, n in zoop) {
 	NodeRoute = ScoreRoute(AITown.GetLocation(town), AITown.GetLocation(target));
-		//AILog.Info( "" + NodeRoute);
+		// AILog.Info(AITown.GetName(town) + " - " + AITown.GetName(target) + " score: " + NodeRoute);
 	if (NodeRoute < GoRoute) GoRoute = NodeRoute;
 }
 
@@ -171,16 +171,17 @@ foreach (town, n in zoop) {
 function CivilAI::BuildARoad(a,b,target,bs) {
 
 local buildroad = RoadPF();
+//                                    2147483647
 buildroad.cost.max_cost 			= 50000000;   //10000000;
 buildroad.cost.tile     			= 100;        // 100;
 buildroad.cost.no_existing_road		= 400;        //300 (1.9); //40;
 buildroad.cost.turn           		= 200;        //100;
 buildroad.cost.slope          		= 800;        //200;
 buildroad.cost.bridge_per_tile		= 600;        //150;
-buildroad.cost.tunnel_per_tile		= 300;        //120;
+buildroad.cost.tunnel_per_tile		= 3000;       //120;
 buildroad.cost.coast       			= 500;        //20;
-buildroad.cost.max_bridge_length	= 60;          //10; !!!!!
-buildroad.cost.max_tunnel_length	= 20;          //20;
+buildroad.cost.max_bridge_length	= 12;          //10; !!!!!
+buildroad.cost.max_tunnel_length	= 10;          //20;
 buildroad.cost.bus_stop				= bs;
 
 if (target != -1) {
@@ -224,7 +225,7 @@ local maxtime = NetworkRadius;
 local percount = 0;
 local path = false;
 while (path == false) {
-  path = buildroad.FindPath(50);
+  path = buildroad.FindPath(1000);
   AIController.Sleep(1);
   
 i++

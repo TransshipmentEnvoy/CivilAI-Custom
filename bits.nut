@@ -364,16 +364,16 @@ lelev = lelev + (hda);
 local hdb = (AITile.GetMinHeight(itile) - AITile.GetMinHeight(b));
 if (hdb < 0) hdb = -hdb;
 lelev = lelev + (hdb);
-if (AITile.GetSlope(itile) != AITile.SLOPE_FLAT) { lelev = lelev + 15;}
+if (AITile.GetSlope(itile) != AITile.SLOPE_FLAT) { lelev = lelev + 3;}
 
 // wet score
-local lwet = 0;
-if (AITile.IsWaterTile(itile)) lwet = 100;
+//local lwet = 0;
+//if (AITile.IsWaterTile(itile)) lwet = 100;
 
 //AISign.BuildSign(itile, "e " + lelev + " w " + lwet);
 
 elev = elev + lelev;
-wet = wet + lwet;
+//wet = wet + lwet;
 }
 
 score = dist + elev + wet;
