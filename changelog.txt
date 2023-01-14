@@ -1,0 +1,361 @@
+Version 37:
+Tweaks:
+	Road Network:
+	- AI will avoid building vehicles and roads incompatible with default town roads (eg trolleybuses).
+	- AI will only upgrade roads which it owns.
+		
+Version 36:
+Features:
+	Road Network:
+	- Added New Road Types compatibility.
+		- AI can now build NRT roads.
+		- AI will upgrade older NRT roads when building routes.
+
+	- Various other bug fixes and tweaks.
+	
+Version 35:
+Bug fixes:
+	Trains:
+	- Fixed crash when trying to remove track owned by another player.
+
+Version 34:
+Features:
+	Trains & Road Network:
+	- Pre-surveying of routes added, to avoid wasting time trying to path routes which are too long, hilly or wet.
+	Road Network:
+	- Building the intercity road network has been re-enabled, with the pre-survey feature.	
+
+Version 33:
+Bug fixes:
+	Ships:
+	- Fixed crash when checking for ferry route but no ferries are available (reported by 2TallTyler and Timberwolf).
+
+Version 32:
+Bug fixes:
+	Trains:
+	- Fixed crash when trying to build a mail van (reported by andythenorth).
+
+Version 31:
+Features:
+	Trains:
+	- AI can now build stations and trains of varying lengths, instead of always 3 tiles.
+	- AI will build additional freight trains to meet demand.
+	Road Network:
+	-Building the intercity road network has been disabled.
+Tweaks:
+	- AI will now avoid planting trees on farm fields.
+	- Most parameters (max buses, minimum air route distance etc) have been removed from the player-adjustable AI options.
+		- If you're an advanced user and really want to change these numbers, you'll find them at the end of saveload.nut.
+	Trains:
+	- Made avoiding double-connecting industries more reliable.
+	- Tinkered with locomotive selection to avoid using high-speed locomotives for freight.
+	Aircraft:
+	- AI can now buy a cheaper aircraft if its ideal aircraft is too expensive.
+Bug fixes:
+	Trains:
+	- Fixed wagon selection bug that was preventing electrified freight trains from renewing.
+	- Disallowed PBS-locked track loops at station entrances.
+	- Fixed AI ripping up newly built routes because it couldn't quite afford the locomotive yet.
+	- Added code to handle NewGRF wagons not being attachable (thanks Darthrafael).
+	Goods Trucks:
+	- Fixed the AI repeatedly trying to build goods pickup routes to unroutable factories.
+	- Fixed the AI buying lots of goods trucks if the dropoff station stops accepting goods.
+	- Fixed the AI building a goods pickup depot when it cannot afford the trucks.
+
+Version 30:
+Bug fixes:
+	- Fixed crash when loading a savegame (due to the changes in v28, oops!).
+	Trains:
+	- Fixed crash when AI attempts to electrify tracks of another company (reported by andythenorth).
+
+Version 29:
+Bug fixes:
+	Trains:
+	- Fixed AI getting stuck trying to build a junction on a station tile.
+
+Version 28:
+Tweaks:
+	Road Network:
+	- Unified and revised the road depot building code, removing the old concept of 'Home Depot'.
+
+
+Version 27:
+Bug fixes:
+	Trains:
+	- Fixed AI getting stuck building wagons if it fails to build a locomotive.	
+
+Version 26:
+Bug fixes:
+	- Correctly updated version number in-game.
+	Trains:
+	- Fixed AI not building new rail lines if it has existing termini with available connections but no supplying industries.
+
+Version 25:
+Bug fixes:
+	Trains:
+	- AI will be more patient when building wagons, to avoid sending out short trains if it runs low on money.
+
+Version 24:
+Tweaks:
+	Trains:
+	- Added a bias against buying locomotives which will be speed limited by wagons.
+	- When adding new trains to a passenger line, slow old trains will be upgraded.
+	Road Vehicles:
+	- Cancel transfer orders for buses when withdrawing an air service or moving an airport.
+
+Bug fixes:
+	Trains:
+	- Fixed AI failing to electrify rail lines (reported by andythenorth).
+	- Fixed rail placement errors in the passing place code.
+	- Added 90 degree turn detection to the passing place code.
+
+Version 23:
+Bug fixes:
+	- Removed empty file that was breaking content service download.
+	Trains:
+	- fixed the AI removing bridges or other infrastructure when building a passing place.
+
+Version 22:
+Tweaks:	
+	Road Vehicles:
+	- Improved detection for city truck stops which accept food or goods.
+
+Bug fixes:
+	- Correctly updated version number in-game.
+
+Version 21:
+Bug fixes:
+	Road Vehicles:
+	- Fixed road pathfinder not reporting success, leading to failure to buy goods trucks (oops).
+
+Version 20:
+This huge update introduces passenger, mail, food and goods trains, and tidies up and reworks existing features to make CivilAI faster and better than ever before! 
+Please report any crashes or odd behaviour!
+
+Features:
+	Trains:
+	- Added passenger and mail train networks.
+	- Rewrote passing places / double track line construction to be tidier and more reliably buildable.
+	- Rewrote disused track removal code.
+	- Added dynamic railtype selection, instead of always building standard rail.
+		- All locomotives will be considered when building a new rail line and the rail type chosen accordingly.
+		- When adding a new connection to an existing line or replacing an old locomotive, all compatible locomotive types will be considered and the line upgraded if necessary.
+	Road Network:
+	- The option to not build an intercity road network added in v19 has been removed. The AI now always uses a hybrid behaviour.
+		- AI will only build road connections when it has money to spare.
+		- AI will build in towns before it has a road connection.
+		- AI will build in towns it can't connect to with road but are within its sphere (eg on islands or across mountains).
+	- The AI will not build intercity buses unless both trains and aircraft are disabled.
+	- Buses in towns will now transfer passengers to train stations and airports if cargo distribution is disabled.
+	
+Tweaks:	
+	Road Network:
+	- Adjusted pathfinder settings once more to (possibly) reduce building duplicate/messy roads between towns.
+	- Reduced the number of stops at the town's central station from 3 to 2.
+	- Towns where bus network construction failed no longer count as unserviced against road network expansion.
+	- AI will check mail acceptance of stops before building mail trucks.
+	- AI will remove disused goods truck pickup stops.
+	- AI will check the ground is flat before trying to build a goods pickup.
+	- If the AI's home depot gets cut off, it will attempt to rebuild it before giving up and entering its fail state.
+	Aircraft:
+	- AI will build airports much more speculatively, to improve the chance of starting air service early in the game.
+	- AI will not build airports if the maintenance cost would exceed its income.
+	- AI will not build airports if it can't afford aircraft and/or no aircraft are available.
+	- New sanity checks when levelling land for airports, to avoid flattening mountains.
+	- AI will build mail planes between airports which have lots of mail but not many passengers waiting.
+	- AI will not build additional aircraft on unprofitable routes.
+	Trains:
+	- Double-cargo connections (eg grain and livestock to a factory) will now build one train for each cargo.
+	- Added a delay to building second lines to a station, to avoid double-connecting the same producing industry (reported by BW89).
+	- New sanity checks when levelling land for stations, to avoid flattening mountains.
+	- AI should now build more powerful locomotives when replacing old trains on hilly routes.
+	- Adjusted the big/cheap/fast bias scores for locomotive selection.
+	- Adjusted wagon selection.
+	Ships:
+	- Only one dock will be built per station (since more than one is now possible in OpenTTD 1.10).
+	
+Bug fixes:
+	- Fixed second cargo lines being built to the wrong terminus station (reported by rambolz).
+	- Fixed potentially stranding withdrawn trains by removing tracks prematurely.
+	- Fixed crash when attempting to cost a ship with no ships available (reported by baysupercool).
+	- Fixed crash when planning a train route if the target industry gets removed mid-plan (reported by Wormnest).
+	- Fixed the AI getting stuck trying to demolish an airport with a plane stopped in the hangar.
+
+
+
+Version 19:
+- Minimum OpenTTD version is now 1.9.
+- This update has extensive rewrites of a lot of existing code. Please do report any odd behaviour or crashes.
+
+Features:
+	- Added 2cc company colours, and different colours for different vehicle types.
+	- AI has a configurable option to not build an intercity road network, but just to build within towns in its radius.
+
+Tweaks:
+	General:
+	- Reworked selection code for vehicles and added company biases towards big, cheap, or fast vehicles, to add some variety between companies and games.
+	- Reworked the freight train route selection code, for performance and extendability.
+	Aircraft:
+	- AI has alternative behaviour to build airports if road vehicles are disallowed.
+	- AI will build an initial aircraft as soon as it has two airports.
+	- AI will attempt to replace small airports with commuter airports (attached to a different station in the same town) after commuter airports become available.
+	- Increased the maximum number of aircraft servicing each small and commuter airport (from 3 and 6 to 5 and 10 respectively).
+	Ships:
+	- AI will now build only two ship docks per town.
+	- AI will not build ferries with a capacity less than 50 if larger ferries exist (to avoid building FISH/Squid trawlers).
+	Road Vehicles:
+	- Increased the maximum maximum bus count from 500 to 5000, as requested by Samu on IRC (the default maximum remains 250).
+	- AI will now build only two mail truck stops per town.
+	- AI will wait 10 years before trying to build a bus network in a town it previously failed to build enough stops in.
+	
+Bug fixes:
+	- fixed the AI sometimes failing to build goods trucks (because it was trying to build them in another company's depot, whoops).
+
+
+Version 18:
+- There is no version 18 - version number bumped to 19 to coincide with OpenTTD 1.9.
+
+Version 17:
+Bug fixes:
+	- do not count mail, goods and food trucks in towncar count (Apparently I haven't tested town cars since version 6!)
+	- fixed the AI not building airports when noise level feature is disabled.
+
+Version 16:
+Tweaks:
+	- Intercity road connections are now built via a middle point, to make connecting cities faster and more reliable.
+	- Tweaks to the road pathfinder values to (possibly) reduce route duplication and messy road junctions.
+	- AI will not build trucks with top speed below 40km/h if faster vehicles are available (to avoid building HEQS crawlers).
+
+
+Version 15:
+- Rewrote the level crossing removal code (again) to remove the lost vehicle repathing - it was another of those 'clever' ideas that never really worked and took a lot of processing time.
+- fixed a hang condition when rail depot building failed.
+- Made the AI even more bridge-happy.
+- Various other bug fixes and tweaks.
+
+Version 14:
+- Fixed a bug in introduced in v13, which was preventing the AI connecting small towns to expand its train network (oops).
+
+- Added ships:
+	- CivilAI will now build docks at town bus stops, and passenger ferries between and within towns in its network.
+	
+Road Network:
+- Finally revised the oldest and hackiest part of the AI: replaced the cross "spikes" at bus stops with path-based loops.
+- Forked the standard road pathfinder to add pathing cost for drive-through road stops.
+- Bus stop placement in towns is now more randomised, and the AI will avoid placing stops near existing stops (of any company).
+- Added a stricter attempt limit for road pathfinding, and visualised pathfinder progress in the debug log.
+- Made the AI more bridge-happy.
+- Various other bug fixes and tweaks to pathfinding and record keeping.	
+
+- Set default brake van date to 1975, to better align with air-braked stock date of UKRS3.	
+- Better station spread and local authority checking when attempting to place airports.
+
+
+
+Version 13:
+
+CivilAI will now check for other company HQs, and avoid setting up in the same town.
+
+Trains:
+- Improved locomotive selection for trains, taking freight_trains setting and hill steepness into account (thanks arikover).
+- Trains will have brakevans before a certain year (configurable, default 1965), if a NewGRF provides them.
+- Version 12 occasionally built a sharp 90 degree turn when building passing places or retrying a blocked route. To address this:
+	- AI removes passing places with 90 degree turns (if 90 degree turns are forbidden).
+		- If no passing place is built, one train will be built instead of two.
+	- When retrying a blocked route, the AI will backtrack three tiles and build a straight rail before continuing, to avoid constructing 90 degree turns.
+
+Version 12:
+
+- Figured out the correct filename for the changelog. :)
+
+- The connected town list is now cached, and only recalculated on loading the game or building new connections. This should greatly improve the AI's response time, particularly later in the game.
+- Added more company, director and train names.
+- Readded statue building.
+
+- Sometimes, bus and mail services would not come close enough to depots for automatic servicing, resulting in low reliability. To combat this:
+	- Road vehicles with poor reliability are periodically sent for servicing manually.
+	- Additional road depots are built in large cities.
+
+Trains:
+- Improved wagon selection.
+- Made rail building a little more robust, with retrying if the path is blocked and better detection of station orientation.
+- Added an additional station/route type.
+
+
+Version 11:
+
+- Fixed a bug introduced in v10, which was preventing the AI from building goods trucks (oops).
+- CivilAI now attempts to recover poor town ratings by planting trees.
+
+- Lists of unconnectable towns and industries are now stored in save games, to prevent wasting time retrying connections when the game is saved and loaded. Thanks to Brumi/[url=https://www.tt-forums.net/viewtopic.php?f=65&t=44809]SimpleAI[/url] for the list/array conversion code.
+
+Trains:
+- Added more variety to AI locomotive selection.
+- Improved wagon building.
+
+Version 10:
+- Fixed reported crash (for real).
+
+version 9:
+- Fixed collision causing company director name not to be set.
+- Fixed reported crash.
+
+version 8:
+
+- Added Water to the cargos to be trucked to towns.
+- Cargo truck selection now prefers native vehicles over refits, like train wagons.
+- Minor bug fixes.
+
+version 7:
+
+This is a major update, and adds trucks and trains to the AI's repertoire, as well as tidying up a lot of its earlier behaviour. It should now be considered a "normal" competitive AI rather than a specialist oddity, although hopefully it's kept its general "civility" and pleasant construction style.
+
+- Added better company and owner names.
+
+Trucks added:
+- CivilAI will now build trucks for mail, goods and food.
+- Truck stops are added to busy bus stops for mail pickup and goods delivery.
+- Supply depots are built near goods- and food-producing industries to supply cargos to towns.
+
+Trains added:
+- CivilAI will build short train lines to support goods- and food-producing industries.
+
+Air network tweaks:
+- Increased the default minimum air route distance from 80 to 128 tiles.
+- Made sure redirected aircraft are redirected from the correct airport.
+- Improved land levelling for airport construction.
+
+Road network tweaks:
+- simplify the ugly "loop" built at outer bus stops - these never worked properly and were just clutter.
+- Reduced the number of station tiles for central bus stops from 4 to 3 (to allow space for a truck stop).
+- Tweaks to when and how many vehicles are bought.
+- Improve road network integrity by scanning for lost vehicles.
+- Simplify crossing replacement code (which never really worked).
+- More conservative network construction:
+	- Road network construction search now limited to towns the AI can build in.
+	- The AI will only expand the road network once it has built up the network it has, to avoid spending all its money on roads.
+	
+- CivilAI no longer funds roadworks, because that's not very civil.
+- Various other tweaks and fixes.
+
+version 6:
+
+Air network tweaks:
+- Prevent building new airports too close to all existing airports.
+- Redirect a few existing aircraft to newly built airports to refresh the air network.
+
+Road network tweaks:
+- Make our vehicle list nicer to look at by grouping cars and buses separately.
+- Build a depot in large towns even if we're not servicing them, to keep town cars spread out.
+- Remove rail crossings and rebuild as bridges following collisions.
+
+version 5:
+
+- Increase default network size from 256 to 512 tiles radius.
+- Disallow setting up in towns with no centre road tile. 
+- Set up in a random town which meets the size and unserviced criteria, rather than the largest.
+- Replace "monthly" tasks with a constant cycle. AI now builds faster and will not skip tasks.
+- Tweaked conditions for building intercity bus routes to make them more common (but not much).
+- Slightly reduced maximum number of buses on a route to relieve city crowding (but not much).
+- Added building small airports and air routes. Yes, really!
+
