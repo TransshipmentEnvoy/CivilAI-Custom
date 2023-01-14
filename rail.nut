@@ -174,7 +174,7 @@ local c2list = AICargoList_StationAccepting(dest);
 local destlength = GetStatLength(dest);
 local statest = ((AIMap.DistanceManhattan((AIBaseStation.GetLocation(dest)),suptile) + 
 				 AIIndustry.GetLastMonthProduction(AIIndustry.GetIndustryID(suptile), cargo))
-				 / 20);
+				 / 100);
 				 
 			// AILog.Info(statest);
 if (statest < mintrainlength) { trainlength = mintrainlength; }				 
