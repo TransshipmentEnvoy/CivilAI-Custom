@@ -141,7 +141,7 @@ DudBusNetwork.AddItem(town, (AIDate.GetYear(AIDate.GetCurrentDate())) + 10);
 function CivilAI::InterCity() {
 
 //v20 - we only build intercity buses if both trains and planes are disabled
-if (!(AIGameSettings.IsDisabledVehicleType(AIVehicle.VT_RAIL) && AIGameSettings.IsDisabledVehicleType(AIVehicle.VT_AIR))) { return; }
+//if (!(AIGameSettings.IsDisabledVehicleType(AIVehicle.VT_RAIL) && AIGameSettings.IsDisabledVehicleType(AIVehicle.VT_AIR))) { return; }
 
 local dosh = AICompany.GetBankBalance(Me);
 local nbus = IdentifyBus(true, true, FindCargo("PASS"));
@@ -162,7 +162,7 @@ AILog.Info("I'm looking for an intercity bus route.");
 
 local bslist = AIStationList(AIStation.STATION_BUS_STOP); 
 bslist.Valuate(AIStation.GetCargoWaiting, 0); //order by pax waiting
-bslist.RemoveBelowValue(100);
+bslist.RemoveBelowValue(10);
 bslist.Valuate(AIBase.RandItem); // shuffle the list
 
 foreach (stop,z in bslist) {
@@ -199,7 +199,7 @@ if (stat2 == null) {
 AILog.Info("I couldn't find one.");
 return
 }
-local paxo = (((AIStation.GetCargoWaiting(stat1,0) + AIStation.GetCargoWaiting(stat2,0)) / 1000 ) + 1)
+local paxo = (((AIStation.GetCargoWaiting(stat1,0) + AIStation.GetCargoWaiting(stat2,0)) / 100 ) + 1)
 
 
 if (paxo == 1){ 
