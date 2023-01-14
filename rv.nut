@@ -160,7 +160,7 @@ AILog.Info("I'm reviewing my mail services.");
 
 local tslist = AIStationList(AIStation.STATION_TRUCK_STOP); 
 tslist.Valuate(AIStation.GetCargoWaiting, FindCargo("MAIL")); //order by mail waiting
-tslist.RemoveBelowValue(200);				
+tslist.RemoveBelowValue(20);				
 foreach (station, z in tslist) {
 
 local vlist = AIVehicleList_Station(station);
@@ -179,7 +179,7 @@ NewMailGo(station);
 
 local tslist = AIStationList(AIStation.STATION_TRUCK_STOP); 
 tslist.Valuate(AIStation.GetCargoWaiting, FindCargo("PASS")); //order by pass waiting
-tslist.RemoveBelowValue(100);	
+tslist.RemoveBelowValue(10);	
 			
 foreach (station, z in tslist) {
 	local vlist = AIVehicleList_Station(station);
