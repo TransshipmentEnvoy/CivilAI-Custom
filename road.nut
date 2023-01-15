@@ -153,9 +153,34 @@ foreach (town, n in zoop) {
 			if (target != -1) {
 			if (GoRoute < (NetworkRadius) && 
 				BuildARoad(mapnodes,[AITown.GetLocation(target)],target,200)) {
-			
+
+                // test town connects to target
+                local testroad = RoadPF();
+                local begin_towntile = AITown.GetLocation(hometown);
+                local end_towntile = AITown.GetLocation(target);
+
+                testroad.cost.no_existing_road = testroad.cost.max_cost;
+                testroad.InitializePath([end_towntile], [begin_towntile]);
+
+                local testpath = false;
+                while (testpath == false) {
+                    testpath = testroad.FindPath(50);
+                    AIController.Sleep(1);
+                }
+                
+                // judge on test results
+                if (testpath != null) {
+                    AILog.Info("I have connected " + AITown.GetName(target) + ".");
+                } else {
+                    AILog.Info("I somehow cannot connected " + AITown.GetName(target) + ". Add as exclave.");
+                    Dudtowns.AddItem(target,0);
+                    Exclaves.AddItem(target,0);
+                }
+
 
 			} else {
+                Dudtowns.AddItem(target,0) // add this town to a list of unreachables
+                AILog.Info(AITown.GetName(target) + " seems to be unreachable.")
 				// add exclave
 				Exclaves.AddItem(target,0);
 				AILog.Info("I have added " + AITown.GetName(target) + " as an exclave.")
@@ -221,11 +246,11 @@ Recache = true;
 buildroad.InitializePath(a, b);
 
 local i = 0;
-local maxtime = NetworkRadius;
+local maxtime = NetworkRadius * 20; // increase max time
 local percount = 0;
 local path = false;
 while (path == false) {
-  path = buildroad.FindPath(1000);
+  path = buildroad.FindPath(50);
   AIController.Sleep(1);
   
 i++
@@ -237,12 +262,6 @@ if (((i * 10) / maxtime) > percount) {percount++; AILog.Info(percount * 10 + "%"
 }
 
 if (path == false) {
-if (target != -1) {
-Dudtowns.AddItem(target,0) // add this town to a list of unreachables
-AILog.Info(AITown.GetName(target) + " seems to be unreachable.")
-Exclaves.AddItem(target,0);
-AILog.Info("I have added " + AITown.GetName(target) + " as an exclave.")
-}
 return false;
 }
 
@@ -264,7 +283,7 @@ while (path != null) {
 	// - 
 	
       if ((!AIRoad.BuildRoad(path.GetTile(), par.GetTile())) && c < 10) {
-			/* An error occured while building a road. TODO: handle it. */
+			/* An error occured while building a road. TODO: handle it. */;
       }
     } else {
       /* Build a bridge or tunnel. */
