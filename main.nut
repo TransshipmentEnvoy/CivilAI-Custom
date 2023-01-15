@@ -189,6 +189,7 @@ if (!AltMethod && HaveRoadType) {
 	TreeTime();						// Plant trees around towns which don't like us
 	MappaMundi();					// Roads - this is also when we tend to build up cash, so put the most important things at the top
 
+    CashDown(); // remain little cash
 
 LoopCounter();
 }

@@ -183,20 +183,32 @@ if (max - min > 2) { return false } else { return true; }
 function CivilAI::CashUp() {
 
 AICompany.SetLoanAmount(AICompany.GetMaxLoanAmount());
-//AILog.Info("I've borrowed some money from the bank.")
+AILog.Info("I've borrowed some money from the bank.")
 return
 }
 
 function CivilAI::CashDown() {
 
 
-local b = 0; // just in case
+/* local b = 0; // just in case
 while ((AICompany.GetBankBalance(Me) > AICompany.GetLoanInterval()) && b < 100) {
 AICompany.SetLoanAmount(AICompany.GetLoanAmount()-AICompany.GetLoanInterval())
 b++
+} */
+
+local balance = AICompany.GetBankBalance(Me);
+local loan = AICompany.GetLoanAmount();
+local interval = AICompany.GetLoanInterval();
+if (balance >= loan) {
+    AICompany.SetLoanAmount(0);
+} else {
+    // clear balance
+    local curr_credit = loan - balance;
+    curr_credit = ((curr_credit - 1) / interval + 1) * interval;
+    AICompany.SetLoanAmount(curr_credit);
 }
 
-//AILog.Info("I've paid off as much of my loan as I can.")
+AILog.Info("I've paid off as much of my loan as I can.")
 return
 }
 
