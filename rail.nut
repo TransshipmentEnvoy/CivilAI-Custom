@@ -1060,6 +1060,9 @@ local i = 0;
 local maxtime = TrainRange * 20; // increase max time
 local percount = 0;
 
+// cash down
+CashDown();
+
 while (path == false) {
   path = buildrail.FindPath(20);
   AIController.Sleep(1);
@@ -1072,6 +1075,9 @@ if (((i * 10) / maxtime) > percount) {percount++; AILog.Info(percount * 10 + "%"
    return;  
    }  
 }
+
+// cash up
+CashUp();
 
 
 local prev = null;
