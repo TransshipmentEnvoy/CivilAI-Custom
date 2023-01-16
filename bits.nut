@@ -60,6 +60,9 @@ local mapnodes = [AITown.GetLocation(hometown)]
 local nodecount = 1
 local target = -1
 
+// cash down
+CashDown();
+
 foreach (town,z in townlist) {
 
 local testroad = RoadPF();
@@ -82,6 +85,9 @@ if (Dudtowns.HasItem(town)) {Dudtowns.RemoveItem(town);} // remove from dudlist,
 townlist.RemoveItem(town);  // discard disconnected towns
 }
 }
+
+// cash up
+CashUp();
 
 // our townlist now contains only connected towns within the network radius.
 
