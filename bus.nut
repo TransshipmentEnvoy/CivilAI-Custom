@@ -497,8 +497,8 @@ AIMap.GetTileIndex(x-1,y),
 tile
 );
 
-BuildARoad([AIMap.GetTileIndex(x+1,y)],[AITown.GetLocation(town)],-1,3000);
-BuildARoad([AIMap.GetTileIndex(x-1,y)],[AITown.GetLocation(town)],-1,3000);
+BuildARoad([AIMap.GetTileIndex(x+1,y)],[AITown.GetLocation(town)],-1,3000,false);
+BuildARoad([AIMap.GetTileIndex(x-1,y)],[AITown.GetLocation(town)],-1,3000,false);
 
 
 } else {
@@ -552,8 +552,8 @@ AIMap.GetTileIndex(x,y-1),
 tile
 );
 
-BuildARoad([AIMap.GetTileIndex(x,y+1)],[AITown.GetLocation(town)],-1,3000);
-BuildARoad([AIMap.GetTileIndex(x,y-1)],[AITown.GetLocation(town)],-1,3000);
+BuildARoad([AIMap.GetTileIndex(x,y+1)],[AITown.GetLocation(town)],-1,3000,false);
+BuildARoad([AIMap.GetTileIndex(x,y-1)],[AITown.GetLocation(town)],-1,3000,false);
 
 } else {
 // fallback to old cross building

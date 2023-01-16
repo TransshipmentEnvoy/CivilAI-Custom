@@ -41,7 +41,7 @@ AIVehicle.RefitVehicle(obus, cargo); // refit to correct cargo
 AIVehicle.StartStopVehicle(obus);
 
 if (roadupgrade) {
-BuildARoad([AIBaseStation.GetLocation(stops[0])],[AIBaseStation.GetLocation(stops[1])],-1,200);
+BuildARoad([AIBaseStation.GetLocation(stops[0])],[AIBaseStation.GetLocation(stops[1])],-1,200,true);
 }
 
 } else {
@@ -631,7 +631,7 @@ depot = dlist.Begin();
 
 			local a = [AIBaseStation.GetLocation(stop)]
 			local b	= [AIBaseStation.GetLocation(PlanDestination)]				
-			if(!BuildARoad(a,b,-1,200)) { AILog.Info("I couldn't connect the supply."); DontGoodsTruck.AddItem(PlanDestination, 0); return;}
+			if(!BuildARoad(a,b,-1,200,false)) { AILog.Info("I couldn't connect the supply."); DontGoodsTruck.AddItem(PlanDestination, 0); return;}
 
 local HasBus = IdentifyBus(false, false, cargo);
 if (HasBus == null) { return; } else {
@@ -698,7 +698,7 @@ AILog.Info("Existing supply depot found at " + AIBaseStation.GetName(stop) + "."
 
 			local a = [AIBaseStation.GetLocation(stop)]
 			local b	= [AIBaseStation.GetLocation(PlanDestination)]				
-			if(!BuildARoad(a,b,-1,200)) { AILog.Info("I couldn't connect the supply."); return;}
+			if(!BuildARoad(a,b,-1,200,false)) { AILog.Info("I couldn't connect the supply."); return;}
 
 local HasBus = IdentifyBus(false, false, cargo);
 if (HasBus == null) { return; } else {
@@ -724,7 +724,7 @@ if (stop = SupplyDepot(PlanSource, cargo)) {
 
 			local a = [AIBaseStation.GetLocation(stop)]
 			local b	= [AIBaseStation.GetLocation(PlanDestination)]				
-			if(!BuildARoad(a,b,-1,200)) { AILog.Info("I couldn't connect the supply."); return;}
+			if(!BuildARoad(a,b,-1,200,false)) { AILog.Info("I couldn't connect the supply."); return;}
 
 local HasBus = IdentifyBus(false, false, cargo);
 if (HasBus == null) { return; } else {

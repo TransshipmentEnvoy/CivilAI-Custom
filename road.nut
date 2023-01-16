@@ -152,7 +152,7 @@ foreach (town, n in zoop) {
 
 			if (target != -1) {
 			if (GoRoute < (NetworkRadius) && 
-				BuildARoad(mapnodes,[AITown.GetLocation(target)],target,200)) {
+				BuildARoad(mapnodes,[AITown.GetLocation(target)],target,200,false)) {
 
                 // test town connects to target
                 local testroad = RoadPF();
@@ -193,7 +193,7 @@ foreach (town, n in zoop) {
 //                  BUILD ROAD CONNECTION
 // ====================================================== 
 
-function CivilAI::BuildARoad(a,b,target,bs) {
+function CivilAI::BuildARoad(a,b,target,bs,upgrade) {
 
 local buildroad = RoadPF();
 //                                    2147483647
@@ -208,6 +208,10 @@ buildroad.cost.coast       			= 500;        //20;
 buildroad.cost.max_bridge_length	= 12;          //10; !!!!!
 buildroad.cost.max_tunnel_length	= 10;          //20;
 buildroad.cost.bus_stop				= bs;
+
+if (upgrade) {
+    buildroad.cost.no_existing_road = buildroad.cost.max_cost;
+}
 
 if (target != -1) {
 // check funds allow for the connection, and a bit left over to maintain the network

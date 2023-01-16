@@ -271,7 +271,7 @@ local tg = [AIMap.GetTileX(tile),AIMap.GetTileY(tile)]
 			
 				if(AIMarine.BuildDock(tile, station)) {				
 							AIRoad.BuildRoad(a[0], tile);
-							BuildARoad(a,b,-1,100);
+							BuildARoad(a,b,-1,100,false);
 							
 							// build depot							
 							local deptile1 = AIMap.GetTileIndex(tg[0]+1,tg[1]+2);
@@ -306,7 +306,7 @@ local tg = [AIMap.GetTileX(tile),AIMap.GetTileY(tile)]
 		
 				if(AIMarine.BuildDock(tile, station)) {
 							AIRoad.BuildRoad(a[0], tile);	
-							BuildARoad(a,b,-1,100);
+							BuildARoad(a,b,-1,100,false);
 							
 							// build depot							
 							local deptile1 = AIMap.GetTileIndex(tg[0]+1,tg[1]-2);
@@ -341,7 +341,7 @@ local tg = [AIMap.GetTileX(tile),AIMap.GetTileY(tile)]
 		
 				if(AIMarine.BuildDock(tile, station)) {
 							AIRoad.BuildRoad(a[0], tile);	
-							BuildARoad(a,b,-1,100);
+							BuildARoad(a,b,-1,100,false);
 							
 							// build depot							
 							local deptile1 = AIMap.GetTileIndex(tg[0]+2,tg[1]+1);
@@ -377,7 +377,7 @@ local tg = [AIMap.GetTileX(tile),AIMap.GetTileY(tile)]
 											
 				if(AIMarine.BuildDock(tile, station)) {
 							AIRoad.BuildRoad(a[0], tile);
-							BuildARoad(a,b,-1,100);
+							BuildARoad(a,b,-1,100,false);
 							
 							// build depot							
 							local deptile1 = AIMap.GetTileIndex(tg[0]-2,tg[1]+1);
