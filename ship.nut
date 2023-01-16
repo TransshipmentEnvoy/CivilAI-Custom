@@ -683,8 +683,9 @@ if (newship = (AIVehicle.BuildVehicle(depot,ship))) {
 if (copycat != null) {AIOrder.CopyOrders(newship, copycat)} else {
 
 // =====
-local fullflag;
-if (route > 32) {fullflag = AIOrder.OF_FULL_LOAD_ANY} else {fullflag = AIOrder.OF_NONE}
+//local fullflag;
+//if (route > 32) {fullflag = AIOrder.OF_FULL_LOAD_ANY} else {fullflag = AIOrder.OF_NONE}
+fullflag = AIOrder.OF_NONE
 
 AIOrder.AppendOrder(newship, depot, AIOrder.OF_SERVICE_IF_NEEDED);
 AIOrder.AppendOrder(newship, AIBaseStation.GetLocation(dock1),fullflag);

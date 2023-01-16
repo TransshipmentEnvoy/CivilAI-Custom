@@ -238,7 +238,7 @@ AIOrder.RemoveOrder(veh, 0);
 } else {
 AIOrder.RemoveOrder(veh, 1);
 }
-AIOrder.AppendOrder(veh, AIBaseStation.GetLocation(newapsite),(AIOrder.OF_FULL_LOAD_ANY))
+AIOrder.AppendOrder(veh, AIBaseStation.GetLocation(newapsite),(AIOrder.OF_NONE))
 }
 }
 
@@ -560,8 +560,8 @@ if (cargo == FindCargo("PASS")) { AIGroup.MoveVehicle(Groups[4], newplane); } el
 
 
 // set orders
-AIOrder.AppendOrder(newplane, AIBaseStation.GetLocation(ap1),(AIOrder.OF_FULL_LOAD_ANY))
-AIOrder.AppendOrder(newplane, AIBaseStation.GetLocation(ap2),(AIOrder.OF_FULL_LOAD_ANY))
+AIOrder.AppendOrder(newplane, AIBaseStation.GetLocation(ap1),(AIOrder.OF_NONE))
+AIOrder.AppendOrder(newplane, AIBaseStation.GetLocation(ap2),(AIOrder.OF_NONE))
 
 // name the plane
 // ac names
