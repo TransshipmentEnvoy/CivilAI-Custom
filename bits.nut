@@ -189,7 +189,7 @@ if (max - min > 2) { return false } else { return true; }
 function CivilAI::CashUp() {
 
 AICompany.SetLoanAmount(AICompany.GetMaxLoanAmount());
-AILog.Info("I've borrowed some money from the bank.")
+//AILog.Info("I've borrowed some money from the bank.")
 return
 }
 
@@ -214,7 +214,7 @@ if (balance >= loan) {
     AICompany.SetLoanAmount(curr_credit);
 }
 
-AILog.Info("I've paid off as much of my loan as I can.")
+//AILog.Info("I've paid off as much of my loan as I can.")
 return
 }
 
