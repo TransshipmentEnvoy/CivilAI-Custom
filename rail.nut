@@ -1057,7 +1057,7 @@ buildrail.InitializePath(a, b);
 local built = false;
 local path = false;
 local i = 0;
-local maxtime = TrainRange * 5;
+local maxtime = TrainRange * 20; // increase max time
 local percount = 0;
 
 while (path == false) {
