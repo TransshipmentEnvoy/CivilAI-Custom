@@ -99,7 +99,7 @@ local depot = null;
 
 
 docklist.Valuate(AIStation.GetCargoWaiting, 0);
-docklist.KeepAboveValue(100); // only consider populated docks
+docklist.KeepAboveValue(40); // only consider populated docks
 docklist.Valuate(AIBase.RandItem); // shuffle the list
 foreach(dock, z in docklist) {
 depot = FindShipDepot(dock)
