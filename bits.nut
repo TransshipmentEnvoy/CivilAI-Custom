@@ -187,9 +187,11 @@ if (max - min > 2) { return false } else { return true; }
 // ====================================================== 
 
 function CivilAI::CashUp() {
-
-AICompany.SetLoanAmount(AICompany.GetMaxLoanAmount());
-//AILog.Info("I've borrowed some money from the bank.")
+local dosh = AICompany.GetBankBalance(Me);
+if (dosh <= (AICompany.GetMaxLoanAmount() * 2)) {
+    AICompany.SetLoanAmount(AICompany.GetMaxLoanAmount());
+    //AILog.Info("I've borrowed some money from the bank.")
+}
 return
 }
 
