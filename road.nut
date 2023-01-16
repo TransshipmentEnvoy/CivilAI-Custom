@@ -249,6 +249,10 @@ local i = 0;
 local maxtime = NetworkRadius * 20; // increase max time
 local percount = 0;
 local path = false;
+
+// cash down
+CashDown();
+
 while (path == false) {
   path = buildroad.FindPath(50);
   AIController.Sleep(1);
@@ -260,6 +264,9 @@ if (((i * 10) / maxtime) > percount) {percount++; AILog.Info(percount * 10 + "%"
    break;  
 }
 }
+
+// cash up
+CashUp();
 
 if (path == false) {
 return false;
