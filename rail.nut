@@ -381,37 +381,39 @@ function CivilAI::CargoLine() {
             local supdist = 10000000;
             suptile = null;
 
-            foreach(c, z in cslist) {
-                suplist = AIIndustryList_CargoProducing(c);
-                suplist.RemoveList(DudIndustries); // remove known unconnectables
-                suplist.RemoveList(ConnectedPInds); // remove industries we already serve
-                foreach(s, z in suplist) {
-                    local d = ScoreRoute(AIIndustry.GetLocation(Ind), AIIndustry.GetLocation(s));
+            if (cslist != null) { // added because we crashed here for some reason
+                foreach(c, z in cslist) {
+                    suplist = AIIndustryList_CargoProducing(c);
+                    suplist.RemoveList(DudIndustries); // remove known unconnectables
+                    suplist.RemoveList(ConnectedPInds); // remove industries we already serve
+                    foreach(s, z in suplist) {
+                        local d = ScoreRoute(AIIndustry.GetLocation(Ind), AIIndustry.GetLocation(s));
 
-                    //AILog.Info("Assessing " + AIIndustry.GetName(s) + " (" + d + " tiles).");
+                        //AILog.Info("Assessing " + AIIndustry.GetName(s) + " (" + d + " tiles).");
 
-                    if (d < TrainRange &&
-                        AIIndustry.GetLastMonthProduction(s, c) > 60 &&
-                        AIIndustry.GetLastMonthTransportedPercentage(s, c) == 0 &&
-                        !AIIndustry.IsBuiltOnWater(s)) {
+                        if (d < TrainRange &&
+                            AIIndustry.GetLastMonthProduction(s, c) > 60 &&
+                            AIIndustry.GetLastMonthTransportedPercentage(s, c) == 0 &&
+                            !AIIndustry.IsBuiltOnWater(s)) {
 
-                        if (d < supdist) {
-                            supdist = d; // this is the nearest supplier
-                            suptile = (AIIndustry.GetLocation(s));
+                            if (d < supdist) {
+                                supdist = d; // this is the nearest supplier
+                                suptile = (AIIndustry.GetLocation(s));
 
-                            // check for industries which don't have a tile in their top left corner (PITA)
-                            local i = 0;
-                            while (!AIIndustry.IsValidIndustry(AIIndustry.GetIndustryID(suptile)) && i < 10) {
-                                suptile = AIMap.GetTileIndex((AIMap.GetTileX(suptile) + 1), (AIMap.GetTileY(suptile) + 1));
-                                //AILog.Info(AIIndustry.GetName(AIIndustry.GetIndustryID(suptile)))
-                                i++
+                                // check for industries which don't have a tile in their top left corner (PITA)
+                                local i = 0;
+                                while (!AIIndustry.IsValidIndustry(AIIndustry.GetIndustryID(suptile)) && i < 10) {
+                                    suptile = AIMap.GetTileIndex((AIMap.GetTileX(suptile) + 1), (AIMap.GetTileY(suptile) + 1));
+                                    //AILog.Info(AIIndustry.GetName(AIIndustry.GetIndustryID(suptile)))
+                                    i++
+                                }
+
+                                cargo = c;
+                                carg2 = c;
                             }
-
-                            cargo = c;
-                            carg2 = c;
+                        } else {
+                            suplist.RemoveItem(s);
                         }
-                    } else {
-                        suplist.RemoveItem(s);
                     }
                 }
             }
