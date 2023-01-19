@@ -174,7 +174,7 @@ function CivilAI::NoWater(t, xs, ys) {
         for (local y = -1; y <= ys; y++) {
 
             local tt = AIMap.GetTileIndex(tg[0] + (x), tg[1] + (y));
-            if (x == -1 || x == xs || y == -1 || y = ys) { // only interested in the edge tiles
+            if (x == -1 || x == xs || y == -1 || y == ys) { // only interested in the edge tiles
                 local tt = AIMap.GetTileIndex(tg[0] + (x), tg[1] + (y));
                 if (AITile.GetMinHeight(tt) < min) {
                     min = AITile.GetMinHeight(tt);
