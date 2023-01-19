@@ -512,7 +512,7 @@ function CivilAI::CargoLine() {
 
             local statest = ((AIMap.DistanceManhattan(AIIndustry.GetLocation(Ind), suptile) +
                     AIIndustry.GetLastMonthProduction(AIIndustry.GetIndustryID(suptile), cargo)) /
-                20);
+                100);
 
             //	 AILog.Info(statest);
             if (statest < mintrainlength) {
