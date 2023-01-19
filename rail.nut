@@ -1165,10 +1165,10 @@ function CivilAI::BuildALine(a, b) {
     buildrail._cost_turn = 40; // 50;
     buildrail._cost_slope = 300; // 100;
     buildrail._cost_bridge_per_tile = 300;
-    buildrail._cost_tunnel_per_tile = 110; // 120;
+    buildrail._cost_tunnel_per_tile = 300; // 120;
     buildrail._cost_coast = 100; // 20;
-    buildrail._max_bridge_length = 60; // 6; !!
-    buildrail._max_tunnel_length = 20; // 6;
+    buildrail._max_bridge_length = 12; // 6; !!
+    buildrail._max_tunnel_length = 10; // 6;
 
     buildrail.InitializePath(a, b);
 
