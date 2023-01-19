@@ -149,7 +149,7 @@ function CivilAI::LoadParas() {
     // the following were formerly parameters, but are now set values. Modify if you want to!
 
     MinPop = 1000
-    MaxBus = 2000
+    MaxBus = 1000
     MaxCar = 500
     BuyCar = 10
     MinAirRange = 240
