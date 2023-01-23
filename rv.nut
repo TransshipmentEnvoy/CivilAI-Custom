@@ -773,6 +773,10 @@ function CivilAI::MakeAPlan(cargo) {
 function CivilAI::SupplyDepot(ind, cargo) {
 
     local rv = IdentifyBus(true, false, cargo);
+    if (rv == null) {
+        AILog.Info("SupplyDepot: I can't find vehicle. Later.");
+        return null;
+    }
 
     local dosh = AICompany.GetBankBalance(Me);
     if ((dosh) < (AIRoad.GetBuildCost(AIRoad.GetCurrentRoadType(), AIRoad.BT_ROAD) * 50) + (AIEngine.GetPrice(rv) * 2)) {
