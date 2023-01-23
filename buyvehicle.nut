@@ -69,7 +69,7 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
         foreach(rv, z in vlist) {
             if (
                 (vlist.Count() > 1) &&
-                (AIEngine.GetMaxSpeed(rv) < 40)
+                (AIEngine.GetMaxSpeed(rv) < 20)
             ) {
                 vlist.RemoveItem(rv);
             }
