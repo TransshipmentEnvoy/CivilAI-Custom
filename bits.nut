@@ -321,7 +321,7 @@ function CivilAI::ManualService() {
     foreach(rv, z in rvlist) {
         if (!AIOrder.IsGotoDepotOrder(rv, AIOrder.ORDER_CURRENT)) {
             AIVehicle.SendVehicleToDepotForServicing(rv);
-            AILog.Info("Sending " + AIVehicle.GetName(rv) + " to the depot for servicing.");
+            // AILog.Info("Sending " + AIVehicle.GetName(rv) + " to the depot for servicing.");
         }
     }
     AILog.Info("Finished reliability checks.")
