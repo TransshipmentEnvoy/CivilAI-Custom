@@ -344,7 +344,7 @@ function CivilAI::Statues() {
     foreach(town, z in townlist) {
         if (
             AITown.HasStatue(town) ||
-            AITown.GetPopulation(town) < (MinPop * 2)
+            AITown.GetPopulation(town) < (MinPopStatue)
         ) {
             townlist.RemoveItem(town);
         }

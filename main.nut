@@ -22,7 +22,11 @@ class CivilAI extends AIController {
     IsLoaded = false;
     Dudtowns = AIList();
     NetworkRadius = null;
+    
     MinPop = null;
+    MinPopHome = null;
+    MinPopStatue = null;
+
     MaxBus = null;
     MaxCar = null;
     BuyCar = null;

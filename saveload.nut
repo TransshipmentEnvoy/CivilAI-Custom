@@ -148,10 +148,14 @@ function CivilAI::LoadParas() {
 
     // the following were formerly parameters, but are now set values. Modify if you want to!
 
-    MinPop = 800
+    MinPop = 100
+    MinPopHome = 3000
+    MinPopStatue = 2000
+
     MaxBus = 500
-    MaxCar = 100
+    MaxCar = 500
     BuyCar = 10
+
     MinAirRange = 240
     BuyPlane = 1
     TrainRange = NetworkRadius / 2

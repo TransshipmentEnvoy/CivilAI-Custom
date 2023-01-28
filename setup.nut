@@ -9,7 +9,7 @@ function CivilAI::LocateHomeTown() {
     local bigtown = null;
     local townlist = AITownList();
     townlist.Valuate(AITown.GetPopulation);
-    townlist.RemoveBelowValue(MinPop);
+    townlist.RemoveBelowValue(MinPopHome);
 
     // remove unreachables
     foreach(town, z in townlist) {
