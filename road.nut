@@ -149,7 +149,7 @@ function CivilAI::MappaMundi() {
             if (NodeRoute < GoRoute) GoRoute = NodeRoute;
         }
 
-        if (target != -1) {
+        if (target != -1 && AITown.IsValidTown(target)) {
             if (GoRoute < (NetworkRadius) &&
                 BuildARoad(mapnodes, [AITown.GetLocation(target)], target, 200, false)) {
 
@@ -196,7 +196,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
 
     local buildroad = RoadPF();
     //                                    2147483647
-    buildroad.cost.max_cost = 50000000; //10000000;
+    buildroad.cost.max_cost = 10000000; //10000000;
     buildroad.cost.tile = 100; // 100;
     buildroad.cost.no_existing_road = 400; //300 (1.9); //40;
     buildroad.cost.turn = 200; //100;
@@ -209,7 +209,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     buildroad.cost.bus_stop = bs;
 
     if (upgrade) {
-        buildroad.cost.no_existing_road = buildroad.cost.max_cost;
+        buildroad.cost.no_existing_road = 40000;
     }
 
     if (target != -1) {
