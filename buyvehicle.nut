@@ -33,7 +33,7 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
     foreach(rv, z in vlist) { // remove everything that can't carry the cargo
         if ((AIEngine.IsBuildable(rv)) &&
             (AIEngine.GetCargoType(rv) == cargo) &&
-            (AIEngine.GetCapacity(rv) > 9) &&
+            (AIEngine.GetCapacity(rv) > 0) &&
             (AIEngine.GetRoadType(rv) == AIRoad.ROADTYPE_ROAD || (AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD).HasItem(AIEngine.GetRoadType(rv)) && !BannedRoadTypes.HasItem(AIEngine.GetRoadType(rv))))) {
 
             //AILog.Info (AIEngine.GetName(rv) + " is a suitable vehicle.")
@@ -47,7 +47,7 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
         foreach(rv, z in vlist) { // remove everything that can't carry the cargo
             if ((AIEngine.IsBuildable(rv)) &&
                 (AIEngine.CanRefitCargo(rv, cargo)) &&
-                (AIEngine.GetCapacity(rv) > 9) &&
+                (AIEngine.GetCapacity(rv) > 0) &&
                 (AIEngine.GetRoadType(rv) == AIRoad.ROADTYPE_ROAD || AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD).HasItem(AIEngine.GetRoadType(rv)))) {
 
                 //AILog.Info (AIEngine.GetName(rv) + " is a suitable vehicle.")
