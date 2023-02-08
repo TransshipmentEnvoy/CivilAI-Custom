@@ -274,7 +274,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     // cash up
     CashUp();
 
-    if (path == null) {
+    if (path == null || path == false) {
         return false;
     }
 
