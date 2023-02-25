@@ -199,17 +199,17 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     buildroad.cost.max_cost = 10000000; //10000000;
     buildroad.cost.tile = 100; // 100;
     buildroad.cost.no_existing_road = 400; //300 (1.9); //40;
-    buildroad.cost.turn = 200; //100;
-    buildroad.cost.slope = 500; //200;
-    buildroad.cost.bridge_per_tile = 450; //150;
-    buildroad.cost.tunnel_per_tile = 450; //120;
-    buildroad.cost.coast = 400; //20;
+    buildroad.cost.turn = 140; //100;
+    buildroad.cost.slope = 400; //200;
+    buildroad.cost.bridge_per_tile = 350; //150;
+    buildroad.cost.tunnel_per_tile = 350; //120;
+    buildroad.cost.coast = 200; //20;
     buildroad.cost.max_bridge_length = 12; //10; !!!!!
     buildroad.cost.max_tunnel_length = 10; //20;
     buildroad.cost.bus_stop = bs;
 
     if (upgrade) {
-        buildroad.cost.no_existing_road = 40000;
+        buildroad.cost.no_existing_road = 4000;
     }
 
     if (target != -1) {
@@ -278,7 +278,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
         return false;
     }
 
-    local c = 0
+    // local c = 0
 
 
     while (path != null) {
@@ -291,29 +291,89 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
                 if (AIRoad.IsRoadTile(t) &&
                     (AITile.GetOwner(t) == Me)) {
                     //AISign.BuildSign(t, "!");
-                    AIRoad.ConvertRoadType(path.GetTile(), par.GetTile(), AIRoad.GetCurrentRoadType());
+                    local result = false;
+                    while (!result) {
+                        result = AIRoad.ConvertRoadType(path.GetTile(), par.GetTile(), AIRoad.GetCurrentRoadType());
+                        if (AIError.GetLastError() != AIError.ERR_VEHICLE_IN_THE_WAY)
+                            break;
+                    }
+                    if (!result && !AIError.GetLastError() == AIRoad.ERR_UNSUITABLE_ROAD) {
+                        AILog.Info("Upgrade road error: " + AIError.GetLastErrorString());
+                    }
                 }
                 // - 
 
-                if ((!AIRoad.BuildRoad(path.GetTile(), par.GetTile())) && c < 10) {
-                    /* An error occured while building a road. TODO: handle it. */
-                    ;
+                local result = false;
+                while (!result) {
+                    result = AIRoad.BuildRoad(path.GetTile(), par.GetTile());
+                    if (AIError.GetLastError() != AIError.ERR_VEHICLE_IN_THE_WAY)
+                        break;
+                }
+                if (!result && !AIError.GetLastError() == AIError.ERR_ALREADY_BUILT) {
+                    AILog.Info("Build road error: " + AIError.GetLastErrorString());
                 }
             } else {
                 /* Build a bridge or tunnel. */
-                if (!AIBridge.IsBridgeTile(path.GetTile()) && !AITunnel.IsTunnelTile(path.GetTile())) {
+                if (!AIBridge.IsBridgeTile(path.GetTile()) && !AITunnel.IsTunnelTile(path.GetTile())) { /* no existing road and tunnel */
                     /* If it was a road tile, demolish it first. Do this to work around expended roadbits. */
-                    if (AIRoad.IsRoadTile(path.GetTile())) AITile.DemolishTile(path.GetTile());
+                    if (AIRoad.IsRoadTile(path.GetTile())) {
+                        AITile.DemolishTile(path.GetTile());
+                    }
+
                     if (AITunnel.GetOtherTunnelEnd(path.GetTile()) == par.GetTile()) {
                         if (!AITunnel.BuildTunnel(AIVehicle.VT_ROAD, path.GetTile())) {
                             /* An error occured while building a tunnel. TODO: handle it. */
+                            if (AIError.GetLastError() != AIError.ERR_ALREADY_BUILT) {
+                                AILog.Info("Build tunnel error: " + AIError.GetLastErrorString());
+                            }
                         }
                     } else {
                         local bridge_list = AIBridgeList_Length(AIMap.DistanceManhattan(path.GetTile(), par.GetTile()) + 1);
                         bridge_list.Valuate(AIBridge.GetMaxSpeed);
                         bridge_list.Sort(AIList.SORT_BY_VALUE, false);
-                        if (!AIBridge.BuildBridge(AIVehicle.VT_ROAD, bridge_list.Begin(), path.GetTile(), par.GetTile())) {
+
+                        local result = false;
+                        while (!result) {
+                            result = AIBridge.BuildBridge(AIVehicle.VT_ROAD, bridge_list.Begin(), path.GetTile(), par.GetTile());
+                            if (AIError.GetLastError() != AIError.ERR_VEHICLE_IN_THE_WAY)
+                                break;
+                        }
+                        if (!result && !AIError.GetLastError() == AIError.ERR_ALREADY_BUILT) {
                             /* An error occured while building a bridge. TODO: handle it. */
+                            AILog.Info("Build bridge error: " + AIError.GetLastErrorString());
+                        }
+                    }
+                } else if (AIBridge.IsBridgeTile(path.GetTile())) {/* A bridge exists */
+                    // Check if it is a bridge with low speed
+                    local bridge_type_id = AIBridge.GetBridgeID(path.GetTile())
+                    local bridge_max_speed = AIBridge.GetMaxSpeed(bridge_type_id);
+
+                    if(bridge_max_speed < 100) // low speed bridge
+                    {
+                        local other_end_tile = AIBridge.GetOtherBridgeEnd(path.GetTile());
+                        local bridge_length = AIMap.DistanceManhattan( path.GetTile(), other_end_tile ) + 1;
+                        local bridge_list = AIBridgeList_Length(bridge_length);
+
+                        bridge_list.Valuate(AIBridge.GetMaxSpeed);
+                        bridge_list.KeepAboveValue(bridge_max_speed);
+
+                        if(!bridge_list.IsEmpty())
+                        {
+                            // Pick a random faster bridge than the current one
+                            bridge_list.Valuate(AIBase.RandItem);
+                            bridge_list.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
+
+                            // Upgrade the bridge
+                            local result = false;
+                            while (!result)
+                            {
+                                result = AIBridge.BuildBridge( AIVehicle.VT_ROAD, bridge_list.Begin(), path.GetTile(), other_end_tile );
+                                if (AIError.GetLastError() != AIError.ERR_VEHICLE_IN_THE_WAY)
+                                    break;
+                            }
+
+                            if (!result && !AIError.GetLastError() == AIError.ERR_ALREADY_BUILT)
+                                AILog.Info("Upgrade bridge error: " + AIError.GetLastErrorString());
                         }
                     }
                 }
@@ -539,6 +599,19 @@ function CivilAI::XRem(orientation, xing) {
 
 
 function CivilAI::SelectRoadType(FirstTime) {
+    local ignore_road_table = {}
+    ignore_road_table["ISR Style paved driveway"] <- 0;
+    ignore_road_table["CHIPS Style asphalt driveway"] <- 0;
+    ignore_road_table["CHIPS Style cobble driveway"] <- 0;
+    ignore_road_table["CHIPS Style mud driveway"] <- 0;
+    ignore_road_table["Paving slabs"] <- 0;
+    ignore_road_table["Urban asphalt road"] <- 0;
+    ignore_road_table["Urban asphalt road w/ stripes"] <- 0;
+    ignore_road_table["Road Verge"] <- 0;
+    ignore_road_table["Cobble stones road"] <- 0;
+    ignore_road_table["ISR road"] <- 0;
+    ignore_road_table["Cement slab of road"] <- 0;
+    ignore_road_table["Asphalt concrete road"] <- 0;
 
     local SelRoadType = null;
     local OldRoadType = AIRoad.GetCurrentRoadType();
@@ -549,25 +622,52 @@ function CivilAI::SelectRoadType(FirstTime) {
         return false;
     }
 
-    local RoadTypes = AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD);
-    local maxspeed = -2;
-
-    foreach(RoadType, z in RoadTypes) {
-
+    local _RoadTypes = AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD);
+    local RoadTypes = AIList();
+    foreach(RoadType, z in _RoadTypes) {
         //AILog.Info ("Assessing Road Type " + RoadType);
-
-        if (!BannedRoadTypes.HasItem(RoadType) &&
-            AIEngine.CanRunOnRoad(HasBus, RoadType) &&
-            (FirstTime || OldRoadType == AIRoad.ROADTYPE_ROAD || AIRoad.RoadVehCanRunOnRoad(RoadType, OldRoadType))
-        ) {
-
-            if (AIRoad.GetMaxSpeed(RoadType) > maxspeed) {
-                SelRoadType = RoadType;
-                maxspeed = AIRoad.GetMaxSpeed(RoadType);
+        if ("IsCatenaryRoadType" in AIRoad) {
+            if (AIRoad.IsCatenaryRoadType(RoadType)) {
+                continue;
             }
         }
+
+        if (AIRoad.GetName(RoadType) in ignore_road_table) {
+            continue;
+        }
+
+        local ori_condition = !BannedRoadTypes.HasItem(RoadType) &&
+            AIEngine.CanRunOnRoad(HasBus, RoadType) &&
+            (FirstTime || OldRoadType == AIRoad.ROADTYPE_ROAD || AIRoad.RoadVehCanRunOnRoad(RoadType, OldRoadType));
+        if (!ori_condition) {
+            continue;
+        }
+
+        RoadTypes.AddItem(RoadType, 0);
     }
 
+    if (RoadTypes.Count() > 0) {
+        // check max road speed
+        local max_road_speed = 0;
+        local candidate_list = AIList();
+        RoadTypes.Valuate(AIRoad.GetMaxSpeed);
+        foreach (r, speed in RoadTypes) {
+            if (speed > max_road_speed) {
+                max_road_speed = speed;
+            }
+        }
+
+        // collect
+        foreach (r, speed in RoadTypes) {
+            if (speed == 0 || speed == max_road_speed) {
+                candidate_list.AddItem(r, 0);
+            }
+        }
+        candidate_list.Valuate(AIRoad.GetBuildCost, AIRoad.BT_ROAD);
+        candidate_list.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
+        SelRoadType = candidate_list.Begin();
+    }
+    
     if (SelRoadType != null) {
 
         AIRoad.SetCurrentRoadType(SelRoadType);
