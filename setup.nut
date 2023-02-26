@@ -352,18 +352,18 @@ function CivilAI::SetName(HomeTownName) {
 
     local companynames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
-    companynames[0] = (HomeTownName + " Garages");
-    companynames[1] = ("Transport for " + HomeTownName);
+    companynames[0] = (HomeTownName + " Investment");
+    companynames[1] = (HomeTownName + " Logistics");
     companynames[2] = (HomeTownName + " Engineering");
     companynames[3] = (HomeTownName + " Transport");
-    companynames[4] = ("Buses by " + fname);
+    companynames[4] = (fname + " Service");
     companynames[5] = (fname + "'s Charabanc");
     companynames[6] = (HomeTownName + " Express");
     companynames[7] = (lname + " & Co.");
-    companynames[8] = (lname + " Coaches");
-    companynames[9] = (lname + " Haulage");
+    companynames[8] = (lname + " Capital");
+    companynames[9] = (lname + " Transit");
     companynames[10] = (HomeTownName + " Corporation");
-    companynames[11] = (lname + "'s");
+    companynames[11] = (lname + "'s Foundation");
 
     local set = false;
     while (set == false) {
