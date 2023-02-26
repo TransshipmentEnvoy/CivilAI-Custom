@@ -201,7 +201,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     buildroad.cost.no_existing_road = 400; //300 (1.9); //40;
     buildroad.cost.turn = 140; //100;
     buildroad.cost.slope = 400; //200;
-    buildroad.cost.bridge_per_tile = 350; //150;
+    buildroad.cost.bridge_per_tile = 380; //150;
     buildroad.cost.tunnel_per_tile = 350; //120;
     buildroad.cost.coast = 200; //20;
     buildroad.cost.max_bridge_length = 12; //10; !!!!!
