@@ -198,7 +198,9 @@ function CivilAI::InterCity() {
                 return
             }
             local paxo = (((AIStation.GetCargoWaiting(stat1, 0) + AIStation.GetCargoWaiting(stat2, 0)) / 100) + 1)
-
+            if (paxo > 20) {
+                paxo = 20;
+            }
 
             if (paxo == 1) {
                 AILog.Info("I'm buying " + paxo + " bus to run from " + (AIBaseStation.GetName(stat1)) + " to " + (AIBaseStation.GetName(stat2)) + ".");
