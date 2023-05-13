@@ -1,6 +1,20 @@
 // ====================================================== 
 //                    FIND RVs TO BUY
-// ======================================================  
+// ====================================================== 
+
+function CivilAI::BusRunOnRoad(rv) {
+    local road_list = AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD);
+    foreach (roadtype, z in road_list) {
+        if (this.CheckRoadIgnore(roadtype)) {
+            continue;
+        }
+
+        if (AIEngine.CanRunOnRoad(rv, roadtype) && AIEngine.HasPowerOnRoad(rv, roadtype)) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // Buses, Coaches, Mail and Goods trucks are now unified in this single function (1.9)
 function CivilAI::IdentifyBus(silent, intercity, cargo) {
@@ -34,9 +48,9 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
         if ((AIEngine.IsBuildable(rv)) &&
             (AIEngine.GetCargoType(rv) == cargo) &&
             (AIEngine.GetCapacity(rv) > 0) &&
-            (AIEngine.GetRoadType(rv) == AIRoad.ROADTYPE_ROAD || (AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD).HasItem(AIEngine.GetRoadType(rv)) && !BannedRoadTypes.HasItem(AIEngine.GetRoadType(rv))))) {
+            (this.BusRunOnRoad(rv))) {
 
-            //AILog.Info (AIEngine.GetName(rv) + " is a suitable vehicle.")
+            // AILog.Info (AIEngine.GetName(rv) + " is a suitable vehicle.")
         } else {
             vlist.RemoveItem(rv);
         }
@@ -48,7 +62,7 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
             if ((AIEngine.IsBuildable(rv)) &&
                 (AIEngine.CanRefitCargo(rv, cargo)) &&
                 (AIEngine.GetCapacity(rv) > 0) &&
-                (AIEngine.GetRoadType(rv) == AIRoad.ROADTYPE_ROAD || AIRoadTypeList(AIRoad.ROADTRAMTYPES_ROAD).HasItem(AIEngine.GetRoadType(rv)))) {
+                (this.BusRunOnRoad(rv))) {
 
                 //AILog.Info (AIEngine.GetName(rv) + " is a suitable vehicle.")
             } else {

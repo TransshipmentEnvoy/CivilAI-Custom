@@ -38,6 +38,7 @@ class CivilAI extends AIController {
     LeftHand = true;
     HaveRoadType = false;
     BannedRoadTypes = AIList();
+    IgnoredRoadTable = {}
 
     Exclaves = AIList();
     MaxExclaves = 5;
@@ -112,6 +113,19 @@ require("ship.nut");
 // ====================================================== 
 
 function CivilAI::Start() {
+    this.IgnoredRoadTable["ISR Style paved driveway"] <- 0;
+    this.IgnoredRoadTable["CHIPS Style asphalt driveway"] <- 0;
+    this.IgnoredRoadTable["CHIPS Style cobble driveway"] <- 0;
+    this.IgnoredRoadTable["CHIPS Style mud driveway"] <- 0;
+    this.IgnoredRoadTable["Paving slabs"] <- 0;
+    this.IgnoredRoadTable["Urban asphalt road"] <- 0;
+    this.IgnoredRoadTable["Urban asphalt road w/ stripes"] <- 0;
+    this.IgnoredRoadTable["Road Verge"] <- 0;
+    this.IgnoredRoadTable["Cobble stones road"] <- 0;
+    this.IgnoredRoadTable["ISR road"] <- 0;
+    this.IgnoredRoadTable["Cement slab of road"] <- 0;
+    this.IgnoredRoadTable["Asphalt concrete road"] <- 0;
+    this.IgnoredRoadTable["Concrete road"] <- 0;
 
     // Startup parameters:
     AICompany.SetAutoRenewStatus(false); // we don't do autorenew
@@ -120,7 +134,6 @@ function CivilAI::Start() {
     if (AIGameSettings.GetValue("vehicle.road_side") == 1) {
         LeftHand = false;
     }
-
 
     LoadParas();
     CashUp();

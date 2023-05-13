@@ -596,23 +596,23 @@ function CivilAI::XRem(orientation, xing) {
 //                    Select Road Type (2022!)
 // ====================================================== 
 
+function CivilAI::CheckRoadIgnore(rt) {
+    if ("IsCatenaryRoadType" in AIRoad) {
+        if (AIRoad.IsCatenaryRoadType(rt)) {
+            return true;
+        }
+    }
+
+    if (AIRoad.GetName(rt) in this.IgnoredRoadTable) {
+        return true;
+    }
+
+    return false;
+}
+
 
 
 function CivilAI::SelectRoadType(FirstTime) {
-    local ignore_road_table = {}
-    ignore_road_table["ISR Style paved driveway"] <- 0;
-    ignore_road_table["CHIPS Style asphalt driveway"] <- 0;
-    ignore_road_table["CHIPS Style cobble driveway"] <- 0;
-    ignore_road_table["CHIPS Style mud driveway"] <- 0;
-    ignore_road_table["Paving slabs"] <- 0;
-    ignore_road_table["Urban asphalt road"] <- 0;
-    ignore_road_table["Urban asphalt road w/ stripes"] <- 0;
-    ignore_road_table["Road Verge"] <- 0;
-    ignore_road_table["Cobble stones road"] <- 0;
-    ignore_road_table["ISR road"] <- 0;
-    ignore_road_table["Cement slab of road"] <- 0;
-    ignore_road_table["Asphalt concrete road"] <- 0;
-
     local SelRoadType = null;
     local OldRoadType = AIRoad.GetCurrentRoadType();
     AILog.Info("Selecting Road Type..." + OldRoadType);
@@ -626,13 +626,7 @@ function CivilAI::SelectRoadType(FirstTime) {
     local RoadTypes = AIList();
     foreach(RoadType, z in _RoadTypes) {
         //AILog.Info ("Assessing Road Type " + RoadType);
-        if ("IsCatenaryRoadType" in AIRoad) {
-            if (AIRoad.IsCatenaryRoadType(RoadType)) {
-                continue;
-            }
-        }
-
-        if (AIRoad.GetName(RoadType) in ignore_road_table) {
+        if (this.CheckRoadIgnore(RoadType)) {
             continue;
         }
 
