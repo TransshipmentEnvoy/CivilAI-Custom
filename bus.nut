@@ -288,7 +288,7 @@ function CivilAI::BuildBusStop(xoff, yoff, count, spread, town, rem, spike) {
                     if (spike) {
                         SpikeY(trytile, town);
                     }
-                } else if (AIError.GetLastError() == 2310) {
+                } else if (AIError.GetLastError() == AIRoad.ERR_UNSUITABLE_ROAD) {
                     AILog.Info("Current Road Type appears to be invalid.");
                     BannedRoadTypes.AddItem(AIRoad.GetCurrentRoadType(), 0);
                     HaveRoadType = SelectRoadType(false);
@@ -332,7 +332,7 @@ function CivilAI::BuildBusStop(xoff, yoff, count, spread, town, rem, spike) {
                     if (spike) {
                         SpikeY(trytile, town);
                     }
-                } else if (AIError.GetLastError() == 2310) {
+                } else if (AIError.GetLastError() == AIRoad.ERR_UNSUITABLE_ROAD) {
                     AILog.Info("Current Road Type appears to be invalid.");
                     BannedRoadTypes.AddItem(AIRoad.GetCurrentRoadType(), 0);
                     HaveRoadType = SelectRoadType(false);
@@ -376,7 +376,7 @@ function CivilAI::BuildBusStop(xoff, yoff, count, spread, town, rem, spike) {
                     if (spike) {
                         SpikeY(trytile, town);
                     }
-                } else if (AIError.GetLastError() == 2310) {
+                } else if (AIError.GetLastError() == AIRoad.ERR_UNSUITABLE_ROAD) {
                     AILog.Info("Current Road Type appears to be invalid.");
                     BannedRoadTypes.AddItem(AIRoad.GetCurrentRoadType(), 0);
                     HaveRoadType = SelectRoadType(false);
@@ -421,7 +421,7 @@ function CivilAI::BuildBusStop(xoff, yoff, count, spread, town, rem, spike) {
                     if (spike) {
                         SpikeY(trytile, town);
                     }
-                } else if (AIError.GetLastError() == 2310) {
+                } else if (AIError.GetLastError() == AIRoad.ERR_UNSUITABLE_ROAD) {
                     AILog.Info("Current Road Type appears to be invalid.");
                     BannedRoadTypes.AddItem(AIRoad.GetCurrentRoadType(), 0);
                     HaveRoadType = SelectRoadType(false);
