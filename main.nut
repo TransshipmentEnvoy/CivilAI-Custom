@@ -40,6 +40,8 @@ class CivilAI extends AIController {
     BannedRoadTypes = AIList();
     IgnoredRoadTable = {}
 
+    MaxLoanKeep = null;
+
     Exclaves = AIList();
     MaxExclaves = 5;
 

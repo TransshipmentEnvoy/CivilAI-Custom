@@ -12,7 +12,7 @@
 
 function CivilAI::CacheTownList() {
 
-    if ((!Recache) && (CycleCount < 5)) {
+    if ((!Recache) && (CycleCount < 12)) {
         AILog.Info("I'm using my cached list of connected towns.");
         CycleCount++;
         return;
@@ -202,8 +202,10 @@ function CivilAI::NoWater(t, xs, ys) {
 
 function CivilAI::CashUp() {
     local dosh = AICompany.GetBankBalance(Me);
-    if (dosh <= (AICompany.GetMaxLoanAmount() * 2)) {
-        AICompany.SetLoanAmount(AICompany.GetMaxLoanAmount());
+    local max_loan = AICompany.GetMaxLoanAmount();
+    max_loan = max_loan < this.MaxLoanKeep ? max_loan : this.MaxLoanKeep;
+    if (dosh <= (max_loan * 2)) {
+        AICompany.SetLoanAmount(max_loan);
         //AILog.Info("I've borrowed some money from the bank.")
     }
     return

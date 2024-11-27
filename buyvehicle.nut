@@ -117,6 +117,7 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
 // ======================================================  
 
 function CivilAI::PickPaxLoco(routelength, climb, railbase, oldHP, cargo, tlen) {
+    // TODO: Rail vehicle selection overhaul
 
     local pax = FindCargo("PASS");
     local mail = FindCargo("MAIL");
@@ -281,6 +282,7 @@ function CivilAI::PickPaxLoco(routelength, climb, railbase, oldHP, cargo, tlen) 
 // ======================================================  
 
 function CivilAI::PickFreightLoco(routelength, climb, railbase, oldHP, cargo, tlen) {
+    // TODO: Rail vehicle selection overhaul
 
     local rtypes = AIRailTypeList();
     local wrtypes = AIRailTypeList();

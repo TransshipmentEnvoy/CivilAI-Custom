@@ -583,9 +583,4 @@ function CivilAI::LoadGroups() {
         }
     }
 
-
-
-
-
-
 }
