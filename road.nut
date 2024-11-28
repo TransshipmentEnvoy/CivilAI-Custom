@@ -197,15 +197,15 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     local buildroad = RoadPF();
     //                                    2147483647
     buildroad.cost.max_cost = 10000000; //10000000;
-    buildroad.cost.tile = 100; // 100;
-    buildroad.cost.no_existing_road = 400; //300 (1.9); //40;
-    buildroad.cost.turn = 140; //100;
-    buildroad.cost.slope = 400; //200;
-    buildroad.cost.bridge_per_tile = 380; //150;
-    buildroad.cost.tunnel_per_tile = 350; //120;
+    buildroad.cost.tile = 80; // 100;
+    buildroad.cost.no_existing_road = 300; //300 (1.9); //40;
+    buildroad.cost.turn = 100; //100;
+    buildroad.cost.slope = 250; //200;
+    buildroad.cost.bridge_per_tile = 350; //150;
+    buildroad.cost.tunnel_per_tile = 320; //120;
     buildroad.cost.coast = 200; //20;
-    buildroad.cost.max_bridge_length = 12; //10; !!!!!
-    buildroad.cost.max_tunnel_length = 10; //20;
+    buildroad.cost.max_bridge_length = 10; //10; !!!!!
+    buildroad.cost.max_tunnel_length =  8; //20;
     buildroad.cost.bus_stop = bs;
 
     if (upgrade) {
@@ -249,7 +249,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     buildroad.InitializePath(a, b);
 
     local i = 0;
-    local maxtime = NetworkRadius * 20; // increase max time
+    local maxtime = NetworkRadius * 4; // increase max time
     local percount = 0;
     local path = false;
 
@@ -257,8 +257,8 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     CashDown();
 
     while (path == false) {
-        path = buildroad.FindPath(50);
-        AIController.Sleep(1);
+        path = buildroad.FindPath(100);
+        AIController.Sleep(5);
 
         i++
         if (((i * 10) / maxtime) > percount) {

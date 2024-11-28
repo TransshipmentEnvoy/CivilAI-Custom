@@ -1177,14 +1177,14 @@ function CivilAI::BuildALine(a, b) {
     local built = false;
     local path = false;
     local i = 0;
-    local maxtime = TrainRange * 60; // increase max time
+    local maxtime = TrainRange * 4; // increase max time
     local percount = 0;
 
     // cash down
     CashDown();
 
     while (path == false) {
-        path = buildrail.FindPath(20);
+        path = buildrail.FindPath(100);
         AIController.Sleep(1);
         //AILog.Info(i)
         i++
