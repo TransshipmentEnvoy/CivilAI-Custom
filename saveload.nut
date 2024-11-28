@@ -161,5 +161,5 @@ function CivilAI::LoadParas() {
     TrainRange = NetworkRadius / 2
     ShipRange = NetworkRadius
 
-    MaxLoanKeep = 5000000
+    MaxLoanKeep = 2000000
 }

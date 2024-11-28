@@ -334,6 +334,8 @@ function CivilAI::ManualService() {
 function CivilAI::Statues() {
 
     local dosh = AICompany.GetBankBalance(Me);
+    local loan = AICompany.GetLoanAmount();
+    dosh = dosh - loan;
 
     if (dosh < 1000000) {
         AILog.Info("No money for statues right now.");

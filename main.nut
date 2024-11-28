@@ -168,6 +168,9 @@ function CivilAI::MainLoop() {
         AILog.Info("Now that I have introduced myself, I should like to have some idea of what is going on...");
     }
 
+    local max_loan = AICompany.GetMaxLoanAmount();
+    max_loan = max_loan < this.MaxLoanKeep ? max_loan : this.MaxLoanKeep;
+
     local dosh;
     LCounter = AIDate.GetCurrentDate();
 
@@ -176,7 +179,7 @@ function CivilAI::MainLoop() {
         LoadParas();
 
         dosh = AICompany.GetBankBalance(Me);
-        if (dosh > (AICompany.GetMaxLoanAmount() * 2)) {
+        if (dosh > (max_loan * 2)) {
             CashDown(); // pay off our loan when we're rich, just for the points.
         } else {
             CashUp(); // Retake loan, just in case inflation is on
