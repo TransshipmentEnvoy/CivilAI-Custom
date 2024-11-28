@@ -9,8 +9,8 @@
 //
 
 
-import("Pathfinder.CRoad", "RoadPF", 4);
-import("Pathfinder.Rail", "RailPF", 1);
+require("pathfinder/road.nut");
+require("pathfinder/rail.nut");
 
 class CivilAI extends AIController {
     // vv!
