@@ -124,7 +124,7 @@ function CivilAI::Airportz() {
         local airdist;
 
         bslist.Valuate(AIStation.GetCargoWaiting, 0); //order by pax waiting
-        bslist.RemoveBelowValue(150);
+        bslist.RemoveBelowValue(300);
 
         foreach(stop, z in bslist) {
             if (
@@ -220,7 +220,7 @@ function CivilAI::UpgradeAirports() {
                 } // remove stops with airports (ie the one being replaced)
             }
             bslist.Valuate(AIStation.GetCargoWaiting, 0); //order by pax waiting
-            bslist.RemoveBelowValue(100);
+            bslist.RemoveBelowValue(200);
 
             if (bslist.Count() > 0) {
                 bslist.Valuate(AIBase.RandItem); // shuffle the list
