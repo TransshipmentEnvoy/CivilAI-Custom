@@ -719,7 +719,7 @@ function CivilAI::BuyAFerry(dock1, dock2, beams1, beams2, intersect, depot, cost
 
             // no existing ferries - build a new route with our route data
 
-            local buoyspacing = 20; // distance between buoys
+            local buoyspacing = 200; // distance between buoys
 
             // find which beams the intersect is on
 
