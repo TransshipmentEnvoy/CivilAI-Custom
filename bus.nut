@@ -160,7 +160,7 @@ function CivilAI::InterCity() {
 
             local bslist = AIStationList(AIStation.STATION_BUS_STOP);
             bslist.Valuate(AIStation.GetCargoWaiting, 0); //order by pax waiting
-            bslist.RemoveBelowValue(20);
+            bslist.RemoveBelowValue(10);
             bslist.Valuate(AIBase.RandItem); // shuffle the list
 
             foreach(stop, z in bslist) {
