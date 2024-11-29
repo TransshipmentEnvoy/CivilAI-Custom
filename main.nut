@@ -38,7 +38,8 @@ class CivilAI extends AIController {
     LeftHand = true;
     HaveRoadType = false;
     BannedRoadTypes = AIList();
-    IgnoredRoadTable = {}
+    IgnoredRoadTable = {};
+    IgnoredRailKeywordTable = [];
 
     MaxLoanKeep = null;
 
@@ -84,6 +85,7 @@ class CivilAI extends AIController {
     Me = (AICompany.ResolveCompanyID(AICompany.COMPANY_SELF));
 }
 
+require("support.nut"); // library functions
 
 require("setup.nut");
 require("saveload.nut");
@@ -128,6 +130,18 @@ function CivilAI::Start() {
     this.IgnoredRoadTable["Cement slab of road"] <- 0;
     this.IgnoredRoadTable["Asphalt concrete road"] <- 0;
     this.IgnoredRoadTable["Concrete road"] <- 0;
+
+    this.IgnoredRailKeywordTable = [
+        "Metro",
+        "metro",
+        "narrow-gauge",
+        "Wagonway",
+        "Light Rail",
+        "Pipeline",
+        "Telecommunication",
+        "Monorail",
+        "Maglev",
+    ]
 
     // Startup parameters:
     AICompany.SetAutoRenewStatus(false); // we don't do autorenew
@@ -185,6 +199,9 @@ function CivilAI::MainLoop() {
             CashUp(); // Retake loan, just in case inflation is on
         }
         CacheTownList(); // Recache town list
+
+        PopulateDudEngine();
+
         DepotClean(); // Clear Depots
         RailReview(); // Clear old tracks, build new trains
 

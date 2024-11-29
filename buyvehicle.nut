@@ -116,6 +116,27 @@ function CivilAI::IdentifyBus(silent, intercity, cargo) {
 //                    FIND PASSENGER LOCO TO BUY
 // ======================================================  
 
+function CivilAI::PopulateDudEngine() {
+    // popilate dudengined
+    foreach(l, z in AIEngineList(AIVehicle.VT_RAIL)) {
+        local locorail = AIEngine.GetRailType(l);
+        local locorailname = AIRail.GetName(locorail);
+        if (locorailname == null) continue;
+        // check if localrailname contains word in this.IgnoredRailKeywordTable
+        local locoremove = false;
+        foreach(keyword in this.IgnoredRailKeywordTable) {
+            if (string_contains(locorailname, keyword)) {
+                locoremove = true;
+                break;
+            }
+        }
+        if (locoremove) {
+            // AILog.Info("Removing " + AIEngine.GetName(l) + " because it runs on " + locorailname);
+            DudEngines.AddItem(l, 0);
+        }
+    }
+}
+
 function CivilAI::PickPaxLoco(routelength, climb, railbase, oldHP, cargo, tlen) {
     // TODO: Rail vehicle selection overhaul
 
@@ -170,7 +191,7 @@ function CivilAI::PickPaxLoco(routelength, climb, railbase, oldHP, cargo, tlen) 
         if (
             (AIEngine.GetCapacity(l) > 0 && AIEngine.GetCargoType(l) != pax && AIEngine.GetCargoType(l) != mail) ||
             AIEngine.GetPower(l) < minpow ||
-            AIEngine.GetMaxSpeed(l) < 64 ||
+            AIEngine.GetMaxSpeed(l) < 40 ||
             !rtypes.HasItem(AIEngine.GetRailType(l)) // these are our minimum standards 
         ) {
             locolist.RemoveItem(l)
