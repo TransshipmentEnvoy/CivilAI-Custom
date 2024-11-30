@@ -11,6 +11,8 @@
 
 require("pathfinder/road.nut");
 require("pathfinder/rail.nut");
+require("dep/AIToyLib/main.nut");
+import("Library.SCPLib", "SCPLib", 45);
 
 class CivilAI extends AIController {
     // vv!
@@ -84,6 +86,16 @@ class CivilAI extends AIController {
     BiasBig = 10;
 
     Me = (AICompany.ResolveCompanyID(AICompany.COMPANY_SELF));
+
+    // comm
+    toy_lib = null;
+    TownSubsidery = null;
+    received_exemption = false;
+    // date schedule
+    current_date = 0;
+    current_month = 0;
+    current_year = 0;
+    current_decade_year = 0;
 }
 
 require("support.nut"); // library functions
@@ -162,6 +174,11 @@ function CivilAI::Start() {
         LoadGroups();
     }
 
+    // Init ToyLib
+    this.toy_lib = AIToyLib(null, this);
+    this.toy_lib.SCPConfigChange(false, false, true);
+
+    // loop
     MainLoop();
 
 }
@@ -199,9 +216,50 @@ function CivilAI::MainLoop() {
         } else {
             CashUp(); // Retake loan, just in case inflation is on
         }
-        CacheTownList(); // Recache town list
 
+        // populate dud engine
         PopulateDudEngine();
+
+        // Run the daily functions
+        local date = AIDate.GetCurrentDate();
+        if (date - this.current_date != 0)
+        {
+            this.current_date = date;
+
+            // comm
+            AIToyLib.Check();
+        }
+
+        // Run the monthly functions
+        local month = AIDate.GetMonth(date);
+        if (month - this.current_month != 0)
+        {
+            AILog.Info("Monthly update");
+
+            CacheTownList(); // Recache town list
+
+            this.AskForMoney();
+            this.AskForExemption();
+
+            this.current_month = month;
+        }
+
+        // Run the yearly functions
+        local year = AIDate.GetYear(date);
+        if (year - this.current_year != 0)
+        {
+            AILog.Info("Yearly Update");
+
+            this.current_year = year
+        }
+
+        // Run the per-decade functions
+        if (year - this.current_decade_year >= 10)
+        {
+            AILog.Info("Decade Update");
+
+            this.current_decade_year = year;
+        }
 
         DepotClean(); // Clear Depots
         RailReview(); // Clear old tracks, build new trains
@@ -232,4 +290,27 @@ function CivilAI::MainLoop() {
 
         LoopCounter();
     }
+}
+
+function CivilAI::AskForMoney()
+{
+    local money = Cachedtowns.Count() * this.TownSubsidery * 100;
+    AIToyLib.ToyAskMoney(money);
+    AILog.Info("I am once again asking for town subsidery of " + money);
+}
+
+function CivilAI::AskForExemption()
+{
+    if (this.received_exemption)
+        return;
+    // Ask Exemption
+    AIToyLib.AskExemption(1);
+    AILog.Info("I am once again asking for your exemption as an AI");
+    AIToyLib.Check();
+}
+
+function CivilAI::ConfirmExemption(message, self)
+{
+    AILog.Info("I have received my exemption as an AI");
+    self.received_exemption = true;
 }

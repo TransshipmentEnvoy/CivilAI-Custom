@@ -77,6 +77,19 @@ class CivilAI extends AIInfo {
             min_value = 0,
             max_value = 10000
         });
+        // gs related: get money each town serviced
+        AddSetting({
+            name = "TownSubsidery",
+            description = "Subsidery for each town serviced (each unit maps to 100)",
+            easy_value = 40,
+            medium_value = 40,
+            hard_value = 40,
+            custom_value = 40,
+            flags = CONFIG_INGAME,
+            step_size = 10,
+            min_value = 0,
+            max_value = 1000
+        });
     }
 
 
