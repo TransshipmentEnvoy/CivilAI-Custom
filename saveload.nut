@@ -145,6 +145,7 @@ function CivilAI::ArrayToList(array) {
 function CivilAI::LoadParas() {
     NetworkRadius = AIController.GetSetting("NetworkRadius");
     BrakeYear = AIController.GetSetting("BrakeYear");
+    MaxLoss = AIController.GetSetting("MaxLoss");
 
     // the following were formerly parameters, but are now set values. Modify if you want to!
 

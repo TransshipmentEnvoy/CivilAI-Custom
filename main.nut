@@ -42,6 +42,7 @@ class CivilAI extends AIController {
     IgnoredRailKeywordTable = [];
 
     MaxLoanKeep = null;
+    MaxLoss = null;
 
     Exclaves = AIList();
     MaxExclaves = 5;

@@ -42,8 +42,8 @@ function CivilAI::ChooChoo() {
 
         local dest = (AIOrder.GetOrderDestination(v, 0));
 
-        if ((AIVehicle.GetProfitLastYear(v) < 0) &&
-            (AIVehicle.GetProfitThisYear(v) < 0) &&
+        if ((AIVehicle.GetProfitLastYear(v) < -MaxLoss) &&
+            (AIVehicle.GetProfitThisYear(v) < -MaxLoss) &&
             !(AIOrder.IsGotoDepotOrder(v, 0)) &&
             (AIVehicle.GetAge(v) > (365)) &&
             (AIVehicle.GetAgeLeft(v) > (365 * 1))) {

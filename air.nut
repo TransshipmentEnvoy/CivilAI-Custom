@@ -569,8 +569,8 @@ function CivilAI::AirReview() {
     }
 
     for (local v = plist.Begin(); !(plist.IsEnd()); v = plist.Next()) {
-        if ((AIVehicle.GetProfitLastYear(v) < 0) &&
-            (AIVehicle.GetProfitThisYear(v) < 0) &&
+        if ((AIVehicle.GetProfitLastYear(v) < -MaxLoss) &&
+            (AIVehicle.GetProfitThisYear(v) < -MaxLoss) &&
             (AIVehicle.GetAge(v) > (365 * 2))) {
             AIVehicle.SendVehicleToDepot(v);
             AILog.Info(AIVehicle.GetName(v) + " is losing money, so I'm sending it to the hangar.")

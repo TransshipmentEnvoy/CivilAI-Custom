@@ -207,8 +207,8 @@ function CivilAI::FerryReview() {
             AILog.Info(AIVehicle.GetName(ship) + " is getting old, so I'm sending it to the depot.");
             AIOrder.SetOrderFlags(ship, 0, AIOrder.OF_STOP_IN_DEPOT);
         } else if ((AIVehicle.GetAge(ship) > (365 * 3)) &&
-            (AIVehicle.GetProfitLastYear(ship) < 0) &&
-            (AIVehicle.GetProfitThisYear(ship) < 0)) {
+            (AIVehicle.GetProfitLastYear(ship) < -MaxLoss) &&
+            (AIVehicle.GetProfitThisYear(ship) < -MaxLoss)) {
             AILog.Info(AIVehicle.GetName(ship) + " is losing money, so I'm sending it to the depot.");
             AIOrder.SetOrderFlags(ship, 0, AIOrder.OF_STOP_IN_DEPOT);
             AIOrder.SkipToOrder(ship, 0);

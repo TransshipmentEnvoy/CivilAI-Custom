@@ -64,6 +64,19 @@ class CivilAI extends AIInfo {
             min_value = 0,
             max_value = 10000
         });
+        // allow max loss
+        AddSetting({
+            name = "MaxLoss",
+            description = "Allowed Maximum Loss for single vehicle",
+            easy_value = 2500,
+            medium_value = 2500,
+            hard_value = 2500,
+            custom_value = 2500,
+            flags = CONFIG_INGAME,
+            step_size = 125,
+            min_value = 0,
+            max_value = 10000
+        });
     }
 
 

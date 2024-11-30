@@ -815,8 +815,8 @@ function CivilAI::BusReview() {
     }
 
     for (local v = rvlist.Begin(); !(rvlist.IsEnd()); v = rvlist.Next()) {
-        if ((AIVehicle.GetProfitLastYear(v) < 0) &&
-            (AIVehicle.GetProfitThisYear(v) < 0) &&
+        if ((AIVehicle.GetProfitLastYear(v) < -MaxLoss) &&
+            (AIVehicle.GetProfitThisYear(v) < -MaxLoss) &&
             //	(AIVehicle.GetCapacity(v,0) > 9) &&
             (AIVehicle.GetAge(v) > (365 * 2))) {
             AIVehicle.SendVehicleToDepot(v);
