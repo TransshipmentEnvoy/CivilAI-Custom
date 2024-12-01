@@ -1,17 +1,17 @@
 //<
-// ====================================================== 
-// ====================================================== 
+// ======================================================
+// ======================================================
 //         CCCC     AAAA    RRRRR     SSSS
 //        C    C   A    A   R   RR   SS   S
 //       CC        AAAAAA   RRRRR      SS
 //        C    C   A    A   R   R    S   SS
 //         CCCC    A    A   R    R    SSSS
-// ====================================================== 
-// ====================================================== 
+// ======================================================
+// ======================================================
 //>
-// ====================================================== 
+// ======================================================
 //                 MANAGE TOWN CARS
-// ====================================================== 
+// ======================================================
 
 function CivilAI::Vroom() {
 
@@ -31,7 +31,7 @@ function CivilAI::Vroom() {
         vlist.Valuate(AIEngine.GetRunningCost);
         vlist.KeepValue(0);
         vlist.Valuate(AIEngine.GetCapacity);
-        vlist.KeepBelowValue(10);
+        vlist.KeepBelowValue(0);
 
         if (vlist.Count() == 0) {
             AILog.Info("I can't find any town cars available to buy.")
@@ -41,9 +41,9 @@ function CivilAI::Vroom() {
 
             local townlist = AIList();
             townlist.AddList(Cachedtowns);
-            // ====================================================== 
+            // ======================================================
             //      calculate the maximum number of cars to buy
-            // ====================================================== 
+            // ======================================================
 
             // the maximum number of towncars is governed by 3 factors;
             // the config setting.
@@ -90,9 +90,9 @@ function CivilAI::Vroom() {
                 AILog.Info(CarsToBuild + " drivers want new cars (" + carcount + " town cars active).")
                 //AILog.Info(CarsToBuild + " drivers want new cars (" + (((population / worldsize / 160).tointeger()) + 1) +  "% population density, " + (100 - unservedperc) + "% of passengers transported, " + carcount + " town cars active).")
             }
-            // ====================================================== 
+            // ======================================================
             //             purchase and name town cars
-            // ====================================================== 
+            // ======================================================
 
             if (CarsToBuild > BuyCar) {
                 CarsToBuild = BuyCar
@@ -147,9 +147,9 @@ function CivilAI::Vroom() {
         AILog.Info("I've already got my maximum number of town cars, so I won't build more.")
     }
 
-    // ====================================================== 
+    // ======================================================
     //             send old cars to the depot
-    // ====================================================== 
+    // ======================================================
 
     for (local v = rvlist.Begin(); !(rvlist.IsEnd()); v = rvlist.Next()) {
         if ((AIVehicle.GetAgeLeft(v) < (365 * 1)) && !(AIVehicle.IsStoppedInDepot(v)) && AIVehicle.IsValidVehicle(v)) {
