@@ -1177,7 +1177,7 @@ function CivilAI::BuildALine(a, b) {
     local built = false;
     local path = false;
     local i = 0;
-    local maxtime = TrainRange * 4; // increase max time
+    local maxtime = TrainRange * 10; // increase max time
     local percount = 0;
 
     // cash down

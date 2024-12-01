@@ -249,7 +249,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     buildroad.InitializePath(a, b);
 
     local i = 0;
-    local maxtime = NetworkRadius * 4; // increase max time
+    local maxtime = NetworkRadius * 10; // increase max time
     local percount = 0;
     local path = false;
 
