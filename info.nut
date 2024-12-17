@@ -80,7 +80,7 @@ class CivilAI extends AIInfo {
         // gs related: get money each town serviced
         AddSetting({
             name = "TownSubsidery",
-            description = "Subsidery for each town serviced (each unit maps to 100)",
+            description = "Subsidery for each town serviced (each unit maps to 10)",
             easy_value = 40,
             medium_value = 40,
             hard_value = 40,
