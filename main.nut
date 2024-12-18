@@ -298,7 +298,7 @@ function CivilAI::AskForMoney()
     local loan = AICompany.GetLoanAmount();
     if (balance - loan > 1000000)
         return;
-    local money = Cachedtowns.Count() * this.TownSubsidery * 10;
+    local money = Cachedtowns.Count() * this.TownSubsidery * 100;
     AIToyLib.ToyAskMoney(money);
     AILog.Info("I am once again asking for town subsidery of " + money);
 }
