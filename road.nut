@@ -171,9 +171,10 @@ function CivilAI::MappaMundi() {
                 if (testpath != null) {
                     AILog.Info("I have connected " + AITown.GetName(target) + ".");
                 } else {
-                    AILog.Info("I somehow cannot connected " + AITown.GetName(target) + ". Add as exclave.");
-                    Dudtowns.AddItem(target, 0);
+                    // Dudtowns.AddItem(target, 0); Do not add as Dudtown
+                    // AILog.Info(AITown.GetName(target) + " seems to be unreachable.")
                     Exclaves.AddItem(target, 0);
+                    AILog.Info("I somehow cannot connected " + AITown.GetName(target) + ". Add as exclave.");
                 }
 
 
