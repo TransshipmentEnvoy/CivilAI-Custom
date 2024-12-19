@@ -151,7 +151,8 @@ function CivilAI::MappaMundi() {
 
         if (target != -1 && AITown.IsValidTown(target)) {
             if (GoRoute < (NetworkRadius) &&
-                BuildARoad(mapnodes, [AITown.GetLocation(target)], target, 200, false)) {
+                (BuildARoad(mapnodes, [AITown.GetLocation(target)], target, 200, false) != ::BuildARoadResult.FAILURE)
+            ) {
 
                 // test town connects to target
                 local testroad = RoadPF();
@@ -192,6 +193,12 @@ function CivilAI::MappaMundi() {
 // ====================================================== 
 //                  BUILD ROAD CONNECTION
 // ====================================================== 
+
+enum BuildARoadResult {
+    FAILURE = 0,
+    SUCCESS,
+    NOFUNDS,
+}
 
 function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
 
@@ -236,18 +243,17 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
                 AILog.Info("I can't afford to build a road to " + AITown.GetName(target) + " right now. Perhaps later.")
             }
 
-            return false;
+            return BuildARoadResult.NOFUNDS;
         }
         AILog.Info("I'm connecting " + AITown.GetName(target) + " to the road network (" + condist + ").")
         Recache = true;
-
-
 
     } else {
         //AILog.Info("I'm reviewing the roads between " + AITown.GetName(AITile.GetClosestTown(a[0])) + " and " + AITown.GetName(AITile.GetClosestTown(b[0])) + ".")
     }
 
     buildroad.InitializePath(a, b);
+    // buildroad.InitializePath(b, a);
 
     local i = 0;
     local maxtime = NetworkRadius * 20; // increase max time
@@ -276,7 +282,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     CashUp();
 
     if (path == null || path == false) {
-        return false;
+        return BuildARoadResult.FAILURE;
     }
 
     // local c = 0
@@ -384,7 +390,7 @@ function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
     }
     //AILog.Info("I've finished road building for now.")
 
-    return true;
+    return BuildARoadResult.SUCCESS;
 }
 
 // ====================================================== 

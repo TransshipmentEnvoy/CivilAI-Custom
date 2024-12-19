@@ -633,7 +633,7 @@ function CivilAI::MakeAPlan(cargo) {
 
                 local a = [AIBaseStation.GetLocation(stop)]
                 local b = [AIBaseStation.GetLocation(PlanDestination)]
-                if (!BuildARoad(a, b, -1, 200, false)) {
+                if (BuildARoad(a, b, -1, 200, false) != ::BuildARoadResult.SUCCESS) {
                     AILog.Info("I couldn't connect the supply.");
                     DontGoodsTruck.AddItem(PlanDestination, 0);
                     return;
@@ -706,7 +706,7 @@ function CivilAI::MakeAPlan(cargo) {
 
                         local a = [AIBaseStation.GetLocation(stop)]
                         local b = [AIBaseStation.GetLocation(PlanDestination)]
-                        if (!BuildARoad(a, b, -1, 200, false)) {
+                        if (BuildARoad(a, b, -1, 200, false) != ::BuildARoadResult.SUCCESS) {
                             AILog.Info("I couldn't connect the supply.");
                             return;
                         }
@@ -737,7 +737,7 @@ function CivilAI::MakeAPlan(cargo) {
 
                 local a = [AIBaseStation.GetLocation(stop)]
                 local b = [AIBaseStation.GetLocation(PlanDestination)]
-                if (!BuildARoad(a, b, -1, 200, false)) {
+                if (BuildARoad(a, b, -1, 200, false) != ::BuildARoadResult.SUCCESS) {
                     AILog.Info("I couldn't connect the supply.");
                     return;
                 }
