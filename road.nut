@@ -196,8 +196,8 @@ function CivilAI::MappaMundi() {
 
 enum BuildARoadResult {
     FAILURE = 0,
-    SUCCESS,
-    NOFUNDS,
+    SUCCESS = 1,
+    NOFUNDS = 2,
 }
 
 function CivilAI::BuildARoad(a, b, target, bs, upgrade) {
