@@ -47,7 +47,8 @@ class CivilAI extends AIController {
     MaxLoss = null;
 
     Exclaves = AIList();
-    MaxExclaves = 5;
+    MaxExclaves = 5; // not used
+    ExclaveYearlyReduce = 5;
 
     Cachedtowns = AIList();
     Recache = true;
@@ -250,6 +251,8 @@ function CivilAI::MainLoop() {
         {
             AILog.Info("Yearly Update");
 
+            this.ExclaveLimit();
+
             this.current_year = year
         }
 
@@ -317,4 +320,30 @@ function CivilAI::ConfirmExemption(message, self)
 {
     AILog.Info("I have received my exemption as an AI");
     self.received_exemption = true;
+}
+
+function CivilAI::ExclaveLimit()
+{
+    /* for town in exclave that is not dudtown,
+     * only keep the farthest 10 town in Exclaves
+     * */
+    local hq = AICompany.GetCompanyHQ(Me);
+    // copy the list of Exclaves
+    local exclave_candidate = AIList();
+    exclave_candidate.AddList(this.Exclaves);
+    // remote dudtowns
+    exclave_candidate.RemoveList(this.Dudtowns);
+    // evaluate distance
+    exclave_candidate.Valuate(AITown.GetDistanceManhattanToTile, hq);
+    exclave_candidate.Sort(AIList.SORT_BY_VALUE, false); // largest first
+    // remove bottom ExclaveYearlyReduce that are nearest
+    exclave_candidate.RemoveBottom(this.ExclaveYearlyReduce);
+    // add back dudtowns
+    exclave_candidate.AddList(this.Dudtowns);
+    // update Exclaves
+    this.Exclaves = exclave_candidate;
+    // debug: log all townnames in Exclaves
+    /* foreach(town, z in this.Exclaves) {
+        AILog.Info("Exclave town: " + AITown.GetName(town));
+    } */
 }
